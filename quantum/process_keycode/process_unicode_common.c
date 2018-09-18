@@ -39,6 +39,13 @@ void set_unicode_input_mode(uint8_t mode) {
   eeprom_update_byte(EECONFIG_UNICODEMODE, mode);
 }
 
+void cycle_unicode_input_mode(void)
+{
+  do {
+    input_mode = (input_mode + 1) % UC__COUNT;
+  } while (!(UC_SELECTED_MODES & 1<<input_mode)); // Skip unselected modes
+}
+
 __attribute__((weak))
 void unicode_input_start(void) {
   saved_mods = get_mods(); // Save current mods
