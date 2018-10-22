@@ -22,21 +22,21 @@
 static uint8_t input_mode;
 uint8_t mods;
 
-void set_unicode_input_mode(uint8_t os_target) {
-  input_mode = os_target;
-  eeprom_update_byte(EECONFIG_UNICODEMODE, os_target);
-}
-
-uint8_t get_unicode_input_mode(void) {
-  return input_mode;
-}
-
 void unicode_input_mode_init(void) {
   static bool first_flag = false;
   if (!first_flag) {
     input_mode = eeprom_read_byte(EECONFIG_UNICODEMODE);
     first_flag = true;
   }
+}
+
+uint8_t get_unicode_input_mode(void) {
+  return input_mode;
+}
+
+void set_unicode_input_mode(uint8_t mode) {
+  input_mode = mode;
+  eeprom_update_byte(EECONFIG_UNICODEMODE, mode);
 }
 
 __attribute__((weak))
