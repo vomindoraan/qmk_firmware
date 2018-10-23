@@ -25,6 +25,11 @@
 #define UNICODE_SELECTED_MODES -1
 #endif
 
+// Whether input mode changes in cycle should be written to EEPROM
+#ifndef UNICODE_CYCLE_PERSIST
+#define UNICODE_CYCLE_PERSIST true
+#endif
+
 // Keycodes used for starting Unicode input on different platforms
 #ifndef UNICODE_OSX_KEY
 #define UNICODE_OSX_KEY  KC_LALT
