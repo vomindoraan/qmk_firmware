@@ -19,6 +19,12 @@
 
 #include "quantum.h"
 
+// Comma-delimited, ordered list of input modes selected for use (e.g. in cycle)
+// Example: #define UNICODE_SELECTED_MODES UC_WINC, UC_LNX
+#ifndef UNICODE_SELECTED_MODES
+#define UNICODE_SELECTED_MODES -1
+#endif
+
 // Keycodes used for starting Unicode input on different platforms
 #ifndef UNICODE_OSX_KEY
 #define UNICODE_OSX_KEY  KC_LALT
@@ -44,6 +50,7 @@ enum unicode_input_modes {
 void unicode_input_mode_init(void);
 uint8_t get_unicode_input_mode(void);
 void set_unicode_input_mode(uint8_t mode);
+void cycle_unicode_input_mode(void);
 
 void unicode_input_start(void);
 void unicode_input_finish(void);
