@@ -916,7 +916,7 @@ static int randrange(int low, int high) {
 #ifdef __AVR_ATmega32U4__
   return (TCNT0+TCNT1+TCNT3+TCNT4) % (high-low) + low;
 #else
-  return rand()/(RAND_MAX+1.0) * (high-low+1) + low
+  return rand()/(RAND_MAX+1.0) * (high-low+1) + low;
 #endif
 }
 
