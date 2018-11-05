@@ -938,7 +938,9 @@ void tap_random_base64(void) {
       tap_code(KC_1 + key-53);
       break;
     case 62:        // +
-      tap_code(KC_PLUS);
+      register_code(KC_LSFT);
+      tap_code(KC_EQL);
+      unregister_code(KC_LSFT);
       break;
     case 63:        // /
       tap_code(KC_SLSH);
