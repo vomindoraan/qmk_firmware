@@ -939,7 +939,7 @@ void tap_random_base64(void) {
       break;
     case 62:        // +
       register_code(KC_LSFT);
-      tap_code(KC_EQL);
+      tap_code(KC_EQL); // TODO: Replace with tap_code16(KC_PLUS); and test
       unregister_code(KC_LSFT);
       break;
     case 63:        // /
