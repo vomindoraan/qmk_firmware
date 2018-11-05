@@ -894,9 +894,9 @@ void send_char(char ascii_code) {
 }
 
 void set_single_persistent_default_layer(uint8_t default_layer) {
-  #if defined(AUDIO_ENABLE) && defined(DEFAULT_LAYER_SONGS)
-    PLAY_SONG(default_layer_songs[default_layer]);
-  #endif
+#if defined(AUDIO_ENABLE) && defined(DEFAULT_LAYER_SONGS)
+  PLAY_SONG(default_layer_songs[default_layer]);
+#endif
   eeconfig_update_default_layer(1U<<default_layer);
   default_layer_set(1U<<default_layer);
 }
@@ -911,40 +911,37 @@ void update_tri_layer(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
   layer_state_set(update_tri_layer_state(layer_state, layer1, layer2, layer3));
 }
 
+/* Return a pseudorandom integer in the range [low, high) */
+static int randrange(int low, int high) {
+#ifdef __AVR_ATmega32U4__
+  return (TCNT0+TCNT1+TCNT3+TCNT4) % (high-low) + low;
+#else
+  return rand()/(RAND_MAX+1.0) * (high-low+1) + low
+#endif
+}
+
 void tap_random_base64(void) {
-  #if defined(__AVR_ATmega32U4__)
-    uint8_t key = (TCNT0 + TCNT1 + TCNT3 + TCNT4) % 64;
-  #else
-    uint8_t key = rand() % 64;
-  #endif
+  uint8_t key = randrange(0, 64);
   switch (key) {
-    case 0 ... 25:
+    case 0 ... 25:  // A–Z
       register_code(KC_LSFT);
-      register_code(key + KC_A);
-      unregister_code(key + KC_A);
+      tap_code(KC_A + key);
       unregister_code(KC_LSFT);
       break;
-    case 26 ... 51:
-      register_code(key - 26 + KC_A);
-      unregister_code(key - 26 + KC_A);
+    case 26 ... 51: // a–z
+      tap_code(KC_A + key-26);
       break;
-    case 52:
-      register_code(KC_0);
-      unregister_code(KC_0);
+    case 52:        // 0
+      tap_code(KC_0);
       break;
-    case 53 ... 61:
-      register_code(key - 53 + KC_1);
-      unregister_code(key - 53 + KC_1);
+    case 53 ... 61: // 1–9
+      tap_code(KC_1 + key-53);
       break;
-    case 62:
-      register_code(KC_LSFT);
-      register_code(KC_EQL);
-      unregister_code(KC_EQL);
-      unregister_code(KC_LSFT);
+    case 62:        // +
+      tap_code(KC_PLUS);
       break;
-    case 63:
-      register_code(KC_SLSH);
-      unregister_code(KC_SLSH);
+    case 63:        // /
+      tap_code(KC_SLSH);
       break;
   }
 }
