@@ -3,6 +3,6 @@
 
 #include "../../config.h"
 
-#define TAPPING_TERM 200;
+// #define TAPPING_TERM 200;
 
 #endif
