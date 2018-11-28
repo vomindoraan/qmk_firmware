@@ -14,35 +14,24 @@ enum custom_keycodes {
   FUNC
 };
 
-// enum {
-//   TD_SCLN_QUOTE = 0,
-//   TD_ESC_GRAVE
-// };
+enum {
+  TD_QUOTE_SCLN = 0,
+  TD_ESC_GRAVE
+};
 
-// qk_tap_dance_action_t tap_dance_actions[] = {
-//   //Tap once for Esc, twice for Caps Lock
-//   [TD_SCLN_QUOTE]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_QUOTE),
-//   [TD_ESC_GRAVE]  = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_GRAVE),
-// };
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for quote, twice for semicolon
+  [TD_QUOTE_SCLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_QUOTE),
+  [TD_ESC_GRAVE]  = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_GRAVE),
+};
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Qwerty
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl | Alt  | GUI  |Lower |   B  |   N  |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
 [_QWERTY] = LAYOUT_ortho_4x12( \
-  KC_GESC, KC_Q,      KC_W,    KC_E,    KC_R,       KC_T,             KC_Y,    KC_U,      KC_I,       KC_O,    KC_P,    KC_BSPC, \
-  KC_TAB,  KC_A,      KC_S,    KC_D,    KC_F,       KC_G,             KC_H,    KC_J,      KC_K,       KC_L,    KC_SCLN, KC_ENT, \
-  _______, KC_Z,      KC_X,    KC_C,    KC_V,       KC_B,             KC_N,    KC_M,      KC_COMM,    KC_DOT,  KC_SLSH, _______, \
-  KC_LCTL, MO(_FUNC),KC_LGUI, KC_LALT, MO(_LOWER), LSFT_T(KC_BSPC),  KC_SPC,  MO(_RAISE), KC_LEFT,    KC_DOWN, KC_UP,   KC_RGHT \
+  KC_GESC, KC_Q,      KC_W,    KC_E,    KC_R,                   KC_T,             KC_Y,            KC_U,                  KC_I,       KC_O,    KC_P,              _______, \
+  KC_TAB,  KC_A,      KC_S,    KC_D,    KC_F,                   KC_G,             KC_H,            KC_J,                  KC_K,       KC_L,    TD(TD_QUOTE_SCLN), KC_ENT, \
+  KC_LCTL, KC_Z,      KC_X,    KC_C,    KC_V,                   KC_B,             KC_N,            KC_M,                  KC_COMM,    KC_DOT,  KC_SLSH,           KC_BSLASH, \
+  _______, MO(_FUNC), KC_LGUI, KC_LALT, LT(_LOWER, KC_DELETE),  LSFT_T(KC_BSPC),  LCTL_T(KC_SPC),  LT(_RAISE, KC_ENT),    KC_LEFT,    KC_DOWN, KC_UP,             KC_RGHT \
 ),
 
 /* Lower
@@ -59,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT_ortho_4x12( \
   KC_GRAVE,   KC_EXLM,  KC_AT,      KC_HASH,          KC_DLR,                 KC_PERC,          KC_CIRC,  KC_AMPR,    KC_ASTR,  KC_LPRN,      KC_RPRN,      _______, \
   KC_PSCREEN, _______,  _______,    LALT(LSFT(KC_E)), LALT(LGUI(LSFT(KC_W))), LCTL(LSFT(KC_Z)), _______,  KC_MINUS,   KC_EQUAL, KC_LBRACKET,  KC_RBRACKET,  KC_QUOTE, \
-  _______,    _______,  LCTL(KC_X), LCTL(KC_C),       LCTL(KC_V),             LCTL(KC_Z),       KC_INSERT,KC_DELETE,  _______,  _______,      _______,      KC_BSLASH, \
+  _______,    _______,  LCTL(KC_X), LCTL(KC_C),       LCTL(KC_V),             LCTL(KC_Z),       KC_INSERT,_______,    _______,  _______,      _______,      _______, \
   _______,    _______,  _______,    _______,          _______,                _______,          _______,  _______,    KC_HOME,  KC_PGDOWN,    KC_PGUP,      KC_END \
 ),
 
