@@ -3,6 +3,10 @@
 
 #include "../../config.h"
 
-// #define TAPPING_TERM 200;
+#define TAPPING_TERM 180
+
+#define IGNORE_MOD_TAP_INTERRUPT
+// #define AUTO_SHIFT_TIMEOUT 200
+// #define NO_AUTO_SHIFT_SPECIAL
 
 #endif
