@@ -132,6 +132,14 @@ void unregister_code16 (uint16_t code) {
   }
 }
 
+void tap_code16(uint16_t code) {
+  register_code16(code);
+  #if TAP_CODE_DELAY > 0
+    wait_ms(TAP_CODE_DELAY);
+  #endif
+  unregister_code16(code);
+}
+
 __attribute__ ((weak))
 bool process_action_kb(keyrecord_t *record) {
   return true;
@@ -296,6 +304,11 @@ bool process_record_quantum(keyrecord_t *record) {
       if (record->event.pressed) {
           debug_enable = true;
           print("DEBUG: enabled.\n");
+      }
+    return false;
+    case EEPROM_RESET:
+      if (record->event.pressed) {
+          eeconfig_init();
       }
     return false;
   #ifdef FAUXCLICKY_ENABLE
