@@ -15,13 +15,39 @@
 #define RAL_RGU TD(TD_RAL_RGU)
 #define RCT_RSF TD(TD_RCT_RSF)
 
-#define COMMA   UC(0x002C)
-#define L_PAREN UC(0x0028)
-#define R_PAREN UC(0x0029)
-#define EQUALS  UC(0x003D)
-#define TIMES   UC(0x00D7)
-#define DIVIDE  UC(0x00F7)
-#define MINUS   UC(0x2212)
+enum unicode_names {
+  UC_COMMA,
+  UC_L_PAREN,
+  UC_R_PAREN,
+  UC_EQUALS,
+  UC_TIMES,
+  UC_DIVIDE,
+  UC_MINUS,
+  UC_WEARY,
+  UC_SWEAT,
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+  [UC_COMMA]   = 0x002C,
+  [UC_L_PAREN] = 0x0028,
+  [UC_R_PAREN] = 0x0029,
+  [UC_EQUALS]  = 0x003D,
+  [UC_TIMES]   = 0x00D7,
+  [UC_DIVIDE]  = 0x00F7,
+  [UC_MINUS]   = 0x2212,
+  [UC_WEARY]   = 0x1F629,
+  [UC_SWEAT]   = 0x1F4A6,
+};
+
+#define COMMA   X(UC_COMMA)
+#define L_PAREN X(UC_L_PAREN)
+#define R_PAREN X(UC_R_PAREN)
+#define PARENS  XP(UC_L_PAREN, UC_R_PAREN)
+#define EQUALS  X(UC_EQUALS)
+#define TIMES   X(UC_TIMES)
+#define DIVIDE  X(UC_DIVIDE)
+#define MINUS   X(UC_MINUS)
+#define CUMBONI XP(UC_WEARY, UC_SWEAT)
 
 enum layers {
   L_BASE,
@@ -160,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┼───┤
    * │ M4  │M2 │M↑ │M1 │M3 │M5 │   │UCM│   │Stp│Ply│Prv│Nxt│Clear│Ins│
    * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┼───┤
-   * │      │M← │M↓ │M→ │MW↑│   │   │   │   │   │   │   │        │Top│
+   * │      │M← │M↓ │M→ │MW↑│   │   │( )│😩 💦│   │   │   │        │Top│
    * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┼───┤
    * │        │MA0│MA2│MW←│MW→│   │   │   │VoD│VoU│Mut│ App  │PgU│Btm│
    * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬─┬───┼───┼───┤
@@ -170,7 +196,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [L_FN] = LAYOUT_truefox( \
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  NUMPAD,  KC_SLCK, KC_PAUS, \
     KC_BTN4, KC_BTN2, KC_MS_U, KC_BTN1, KC_BTN3, KC_BTN5, _______, UC_MOD,  _______, KC_MSTP, KC_MPLY, KC_MPRV, KC_MNXT, CLEAR,            KC_INS,  \
-    _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,          _______,          TOP,     \
+    _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, _______, _______, PARENS,  CUMBONI, _______, _______, _______,          _______,          TOP,     \
     _______,          KC_ACL0, KC_ACL2, KC_WH_L, KC_WH_R, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_APP,           KC_PGUP, BOTTOM,  \
     _______, DESKTOP, DSKTP_L,                            KC_WH_D,                   DSKTP_R, _______,                   KC_HOME, KC_PGDN, KC_END   \
   ),
