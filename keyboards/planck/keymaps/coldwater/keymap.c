@@ -42,13 +42,19 @@ enum planck_keycodes {
 
 //Tap Dance Declarations
 enum {
-  TD_Q_COL = 0
+  TD_Q_COL = 0,
+  TD_S_BSL,
+  TD_PL_NX,
+  TD_ST_PR
 };
 
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
   //Tap once for Esc, twice for Caps Lock
-  [TD_Q_COL]  = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_SCLN)
+  [TD_Q_COL]  = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_SCLN),
+  [TD_S_BSL]  = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, KC_BSLASH),
+  [TD_PL_NX]  = ACTION_TAP_DANCE_DOUBLE(KC_MPLY, KC_MNXT),
+  [TD_ST_PR]  = ACTION_TAP_DANCE_DOUBLE(KC_MSTP, KC_MPRV)
 // Other declarations would go here, separated by commas, if you have them
 };
 
@@ -74,6 +80,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define ALTE ALT_T(KC_E)
 #define SFTT SFT_T(KC_T)
 #define SFTN SFT_T(KC_N)
+#define TDQUSC TD(TD_Q_COL)
+#define TDSLBS TD(TD_S_BSL)
+#define TDPLNX TD(TD_PL_NX)
+#define TDSTPR TD(TD_ST_PR)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -91,16 +101,16 @@ KC_LCTL, KC_LWIN, KC_LALT, LOWDEL, SHT_BSP,  _______,  FUNC, KC_SPC,  RAISENT, K
   // KC_A,     KC_R,     KC_S,     KC_T,     KC_G,     _______,  _______,  KC_M,    KC_N,      KC_E,     KC_I,     KC_O,
 
 [_QWERTY] = LAYOUT_planck_grid(
-  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     _______,  _______,  KC_J,    KC_L,      KC_U,     KC_Y,     TD(TD_Q_COL), \
-  CTLA,     GUIR,     ALTS,     KC_T,     KC_G,     KC_ESC,   KC_TAB,   KC_M,    KC_N,      ALTE,     GUII,     CTLO, \
-  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     _______,  _______,  KC_K,    KC_H,      KC_COMM,  KC_DOT,   KC_SLSH, \
-  KC_LCTL,  KC_LWIN,  KC_LALT,  LOWDEL,   SHT_BSP,  MOUSE,    FUNCT,    KC_SPC,  RAISENT,   KC_ALGR,  KC_RWIN,  KC_RCTL \
+  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     TDSTPR,   TDPLNX,   KC_J,    KC_L,      KC_U,     KC_Y,     TDQUSC, \
+  CTLA,     GUIR,     ALTS,     SFTT,     KC_G,     KC_ESC,   KC_TAB,   KC_M,    SFTN,      ALTE,     GUII,     CTLO, \
+  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_VOLD,  KC_VOLU,  KC_K,    KC_H,      KC_COMM,  KC_DOT,   TDSLBS, \
+  KC_LCTL,  KC_LWIN,  MOUSE,    LOWDEL,   SHT_BSP,  _______,  _______,  KC_SPC,  RAISENT,   FUNCT,    KC_RWIN,  KC_RCTL \
 ),
 
 [_LOWER] = LAYOUT_planck_grid(
   _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_GRV,   KC_7,     KC_8,     KC_9,     KC_EQUAL, \
   KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  KC_LPRN,  _______,  _______,  KC_RPRN,  KC_4,     KC_5,     KC_6,     KC_MINUS, \
-  _______,  _______,  _______,  _______,  KC_LBRC,  _______,  _______,  KC_RBRC,  KC_1,     KC_2,     KC_3,     KC_SLSH,  \
+  _______,  _______,  _______,  _______,  KC_LBRC,  KC_BRID,  KC_BRIU,  KC_RBRC,  KC_1,     KC_2,     KC_3,     KC_SLSH,  \
   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_0,     KC_DOT,   _______,  _______  \
 ),
 
@@ -120,9 +130,9 @@ KC_LCTL, KC_LWIN, KC_LALT, LOWDEL, SHT_BSP,  _______,  FUNC, KC_SPC,  RAISENT, K
 
 [_MOUSE] = LAYOUT_planck_grid(
 	_______,  _______,  _______,  _______,  _______,  _______,  _______,	KC_WH_U,  KC_WH_L,  KC_MS_U,  KC_WH_R,  _______, \
-	_______,	_______,  _______,  _______,  _______,  _______,  _______,	KC_WH_D,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_LCTL, \
+	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  _______,  _______,  _______,	KC_WH_D,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_LCTL, \
 	_______,	_______,  _______,  _______,  _______,  _______,  _______,	_______,  _______,  _______,  _______,  _______, \
-	_______,	_______,  _______,  _______,  _______,  _______,  _______,	_______,  KC_BTN1,  KC_BTN2,  _______,  _______ \
+	_______,	_______,  _______,  _______,  _______,  _______,  _______,  KC_BTN1,  KC_BTN2,  _______,  _______,  _______ \
 ),
 
 /* Colemak
