@@ -86,55 +86,43 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TDSLBS TD(TD_S_BSL)
 #define TDPLNX TD(TD_PL_NX)
 #define TDSTPR TD(TD_ST_PR)
-#define _____ KC_NO
+#define xxxxx KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-/*
-[_QWERTY] = LAYOUT_planck_grid(
-KC_Q,    KC_W,    KC_E,    KC_R,      KC_T,     KC_ESC,   _______, KC_Y,    KC_U,        KC_I,     KC_O,    KC_P, \
-KC_A,    KC_S,    KC_D,    KC_F,      KC_G,     KC_TAB,   _______, KC_H,    KC_J,        KC_K,     KC_L,    TD(TD_Q_COL), \
-KC_Z,    KC_X,    KC_C,    KC_V,      KC_B,     _______,  _______, KC_N,    KC_M,        KC_COMM,  KC_DOT,  KC_SLSH, \
-KC_LCTL, KC_LWIN, KC_LALT, LOWDEL, SHT_BSP,  _______,  FUNC, KC_SPC,  RAISENT, KC_ALGR,  KC_RWIN, KC_RCTL \
-),
-*/
-
-
-  // KC_A,     KC_R,     KC_S,     KC_T,     KC_G,     _______,  _______,  KC_M,    KC_N,      KC_E,     KC_I,     KC_O,
 
 [_QWERTY] = LAYOUT_planck_grid(
   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     TDSTPR,   TDPLNX,   KC_J,    KC_L,      KC_U,     KC_Y,     TDQUSC, \
   CTLA,     GUIR,     ALTS,     SFTT,     KC_G,     KC_BRID,  KC_BRIU,  KC_M,    SFTN,      ALTE,     GUII,     CTLO, \
   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_VOLD,  KC_VOLU,  KC_K,    KC_H,      KC_COMM,  KC_DOT,   TDSLBS, \
-  _____,    _____,    MSESC,    LOWDEL,   KC_BSPC,  _____,    _____,    KC_SPC,  RAISENT,   FNTAB,    _____,    _____ \
+  xxxxx,    xxxxx,    MSESC,    LOWDEL,   KC_BSPC,  xxxxx,    xxxxx,    KC_SPC,  RAISENT,   FNTAB,    xxxxx,    xxxxx \
 ),
 
 [_LOWER] = LAYOUT_planck_grid(
-  _____,    _____,    _____,    _____,    _____,    _____,    _____,    KC_GRV,   KC_7,     KC_8,     KC_9,     KC_EQUAL, \
-  KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  KC_LPRN,  _____,    _____,    KC_RPRN,  KC_4,     KC_5,     KC_6,     KC_MINUS, \
-  _____,    _____,    _____,    _____,    KC_LBRC,  _____,    _____,    KC_RBRC,  KC_1,     KC_2,     KC_3,     KC_SLSH,  \
-  _____,    _____,    _____,    _____,    _____,    _____,    _____,    _____,    KC_0,     KC_DOT,   _____,    _______  \
+  xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_GRV,   KC_7,     KC_8,     KC_9,     KC_EQUAL, \
+  KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  KC_LPRN,  xxxxx,    xxxxx,    KC_RPRN,  KC_4,     KC_5,     KC_6,     KC_MINUS, \
+  xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_LBRC,  xxxxx,    xxxxx,    KC_RBRC,  KC_1,     KC_2,     KC_3,     KC_SLSH,  \
+  xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_0,     KC_DOT,   xxxxx,    xxxxx  \
 ),
 
 [_RAISE] = LAYOUT_planck_grid(
-	DIVVY,    F_CHR,    F_WIN,    _____,    _____,    _____,    _____,    KC_PGUP,	KC_HOME,  KC_UP,    KC_END,   KC_PSCR,  \
-	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  _____,    _____,    _____,    KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT,	KC_INS,  \
-	_____,  	_____,    _____,    _____,    _____,    _____,    _____,  	_____,    _____,    _____,    _____,   	_____,    \
-	_____,  	_____,    _______,  _______,  _____,    _____,    _____,  	_____,    _____,    _____,    _____,  	_______  \
+	DIVVY,    F_CHR,    F_WIN,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_PGUP,	KC_HOME,  KC_UP,    KC_END,   KC_PSCR,  \
+	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  xxxxx,    xxxxx,    xxxxx,    KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT,	KC_INS,  \
+	xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,   	xxxxx,    \
+	xxxxx,  	xxxxx,    _______,  _______,  xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx  \
 ),
 
 [_FUNCT] = LAYOUT_planck_grid(
-	_____,    _____,    _____,    _____,    _____,    _____,    _____,    _____,    KC_F7,    KC_F8,    KC_F9,    KC_F10,	\
-	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  _____,    _____,  	_____,    _____,    KC_F4,    KC_F5,    KC_F6,    KC_F11,	\
-	_____,  	_____,    _____,    _____,    _____,    _____,  	_____,    _____,    KC_F1,    KC_F2,    KC_F3,    KC_F12,	\
-	_____,  	_____,    _____,    _____,    _____,    _____,    _____,  	_____,    _____,    _____,    _____,    _______	\
+	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_F7,    KC_F8,    KC_F9,    KC_F10,	\
+	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  xxxxx,    xxxxx,  	xxxxx,    xxxxx,    KC_F4,    KC_F5,    KC_F6,    KC_F11,	\
+	xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    KC_F1,    KC_F2,    KC_F3,    KC_F12,	\
+	xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx	\
 ),
 
 [_MOUSE] = LAYOUT_planck_grid(
-	_____,    _____,    _____,    _____,    _____,    _____,    _____,  	KC_WH_U,  KC_WH_L,  KC_MS_U,  KC_WH_R,  _____,   \
-	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  _____,    _____,    _____,  	KC_WH_D,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_LCTL, \
-	_____,  	_____,    _____,    _____,    _____,    _____,    _____,  	_____,    _____,    _____,    _____,    _____,   \
-	_____,  	_____,    _____,    _____,    _____,    _____,    _____,    KC_BTN1,  KC_BTN2,  _____,    _____,    _______ \
+	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,  	KC_WH_U,  KC_WH_L,  KC_MS_U,  KC_WH_R,  xxxxx,   \
+	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  xxxxx,    xxxxx,    xxxxx,  	KC_WH_D,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_LCTL, \
+	xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,   \
+	xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_BTN1,  KC_BTN2,  xxxxx,    xxxxx,    xxxxx \
 ),
 
 /* Colemak
