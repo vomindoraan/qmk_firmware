@@ -223,9 +223,11 @@ void matrix_init_kb(void);
 void matrix_scan_kb(void);
 void matrix_init_user(void);
 void matrix_scan_user(void);
-bool process_action_kb(keyrecord_t *record);
+
+bool process_keycode(uint16_t keycode, keyrecord_t *record);
 bool process_record_kb(uint16_t keycode, keyrecord_t *record);
 bool process_record_user(uint16_t keycode, keyrecord_t *record);
+bool process_action_kb(keyrecord_t *record);
 
 #ifndef BOOTMAGIC_LITE_COLUMN
   #define BOOTMAGIC_LITE_COLUMN 0

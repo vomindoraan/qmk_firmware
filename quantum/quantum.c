@@ -204,7 +204,6 @@ static uint16_t scs_timer[2] = {0, 0};
 static bool grave_esc_was_shifted = false;
 
 bool process_record_quantum(keyrecord_t *record) {
-
   /* This gets the keycode from the key pressed */
   keypos_t key = record->event.key;
   uint16_t keycode;
@@ -225,14 +224,10 @@ bool process_record_quantum(keyrecord_t *record) {
   #endif
     keycode = keymap_key_to_keycode(layer_switch_get_layer(key), key);
 
-    // This is how you use actions here
-    // if (keycode == KC_LEAD) {
-    //   action_t action;
-    //   action.code = ACTION_DEFAULT_LAYER_SET(0);
-    //   process_action(record, action);
-    //   return false;
-    // }
+  return process_keycode(keycode, record);
+}
 
+bool process_keycode(uint16_t keycode, keyrecord_t *record) {
   #ifdef TAP_DANCE_ENABLE
     preprocess_tap_dance(keycode, record);
   #endif
@@ -285,8 +280,6 @@ bool process_record_quantum(keyrecord_t *record) {
       true)) {
     return false;
   }
-
-  // Shift / paren setup
 
   switch(keycode) {
     case RESET:
