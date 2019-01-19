@@ -203,8 +203,7 @@ static uint16_t scs_timer[2] = {0, 0};
  */
 static bool grave_esc_was_shifted = false;
 
-bool process_record_quantum(keyrecord_t *record) {
-
+uint16_t get_record_keycode(keyrecord_t *record) {
   /* This gets the keycode from the key pressed */
   keypos_t key = record->event.key;
   uint16_t keycode;
@@ -220,10 +219,14 @@ bool process_record_quantum(keyrecord_t *record) {
       } else {
         layer = read_source_layers_cache(key);
       }
-      keycode = keymap_key_to_keycode(layer, key);
+      return keycode = keymap_key_to_keycode(layer, key);
     } else
   #endif
-    keycode = keymap_key_to_keycode(layer_switch_get_layer(key), key);
+    return keymap_key_to_keycode(layer_switch_get_layer(key), key);
+}
+
+bool process_record_quantum(keyrecord_t *record) {
+    uint16_t keycode = get_record_keycode(record);
 
     // This is how you use actions here
     // if (keycode == KC_LEAD) {
