@@ -12,7 +12,7 @@ You can think of QMK as no different from any other computer program. It is star
 
 The reason for this is the different platforms that QMK supports. The most common platform is `lufa`, which runs on AVR processors such at the atmega32u4. We also support `chibios` and `vusb`.
 
-We'll focus on AVR processors for the moment, which use the `lufa` platform. You can find the `main()` function in [tmk_core/protocol/lufa/lufa.c](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/tmk_core/protocol/lufa/lufa.c#L1028). If you browse through that function you'll find that it initializes any hardware that has been configured (including USB to the host) and then it starts the core part of the program with a [`while(1)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/tmk_core/protocol/lufa/lufa.c#L1069). This is [The Main Loop](#the-main-loop).
+We'll focus on AVR processors for the moment, which use the `lufa` platform. You can find the `main()` function in [tmk_core/protocol/lufa/lufa.c](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/tmk_core/protocol/lufa/lufa.c#L1031). If you browse through that function you'll find that it initializes any hardware that has been configured (including USB to the host) and then it starts the core part of the program with a [`while(1)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/tmk_core/protocol/lufa/lufa.c#L1072). This is [The Main Loop](#the-main-loop).
 
 ## The Main Loop
 
@@ -22,7 +22,7 @@ This section of code is called "The Main Loop" because it's responsible for loop
     keyboard_task();
 ```
 
-This is where all the keyboard specific functionality is dispatched. The source code for `keyboard_task()` can be found in [tmk_core/common/keyboard.c](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/tmk_core/common/keyboard.c#L216), and it is responsible for detecting changes in the matrix and turning status LED's on and off.
+This is where all the keyboard specific functionality is dispatched. The source code for `keyboard_task()` can be found in [tmk_core/common/keyboard.c](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/tmk_core/common/keyboard.c#L216), and it is responsible for detecting changes in the matrix and turning status LED's on and off.
 
 Within `keyboard_task()` you'll find code to handle:
 
@@ -77,7 +77,7 @@ At the keyboard level we define a C macro (typically named `KEYMAP()`) which map
 
 Notice how the second block of our `KEYMAP()` macro matches the Matrix Scanning array above? This macro is what will map the matrix scanning array to keycodes. However, if you look at a 17 key numpad you'll notice that it has 3 places where the matrix could have a switch but doesn't, due to larger keys. We have populated those spaces with `KC_NO` so that our keymap definition doesn't have to.
 
-You can also use this macro to handle unusual matrix layouts, for example the [Clueboard rev 2](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/keyboards/clueboard/66/rev2/rev2.h). Explaining that is outside the scope of this document.
+You can also use this macro to handle unusual matrix layouts, for example the [Clueboard rev 2](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/keyboards/clueboard/66/rev2/rev2.h). Explaining that is outside the scope of this document.
 
 ##### Keycode Assignment
 
@@ -132,40 +132,43 @@ Comparing against our keymap we can see that the pressed key is KC_NLCK. From he
 
 The `process_record()` function itself is deceptively simple, but hidden within is a gateway to overriding functionality at various levels of QMK. The chain of events is listed below, using cluecard whenever we need to look at the keyboard/keymap level functions. Depending on options set in `rules.mk` or elsewhere, only a subset of the functions below will be included in final firmware.
 
-* [`void process_record(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/tmk_core/common/action.c#L172)
-  * [`bool process_record_quantum(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/quantum.c#L206)
-    * [Map this record to a keycode](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/quantum.c#L212-L226)
-    * [`bool process_keycode(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/quantum.c#L230)
-      * [`void preprocess_tap_dance(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_tap_dance.c#L119)
-      * [`bool process_key_lock(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_key_lock.c#L62)
-      * [`bool process_clicky(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_clicky.c#L79)
-      * [`bool process_record_kb(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/keyboards/clueboard/card/card.c#L20)
-        * [`bool process_record_user(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/keyboards/clueboard/card/keymaps/default/keymap.c#L58)
-      * [`bool process_rgb_matrix(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/rgb_matrix.c#L139)
-      * [`bool process_midi(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_midi.c#L81)
-      * [`bool process_audio(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_audio.c#L19)
-      * [`bool process_steno(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_steno.c#L160)
-      * [`bool process_music(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_music.c#L114)
-      * [`bool process_tap_dance(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_tap_dance.c#L141)
-      * [`bool process_unicode_common(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_unicode_common.c#L169)
+* [`void process_record(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/tmk_core/common/action.c#L172)
+  * [`bool process_record_quantum(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L247)
+    * [`uint16_t get_record_keycode(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L215)
+      * [`uint16_t get_event_keycode(keyevent_t event)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L222)
+    * [`bool process_keycode(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L255)
+      * [`void preprocess_tap_dance(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_tap_dance.c#L119)
+      * [`bool process_key_lock(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_key_lock.c#L62)
+      * [`bool process_clicky(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_clicky.c#L79)
+      * [`bool process_record_kb(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/keyboards/clueboard/card/card.c#L20)
+        * [`bool process_record_user(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/keyboards/clueboard/card/keymaps/default/keymap.c#L58)
+      * [`bool process_rgb_matrix(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/rgb_matrix.c#L139)
+      * [`bool process_midi(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_midi.c#L81)
+      * [`bool process_audio(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_audio.c#L19)
+      * [`bool process_steno(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_steno.c#L160)
+      * [`bool process_music(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_music.c#L114)
+      * [`bool process_tap_dance(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_tap_dance.c#L141)
+      * [`bool process_unicode_common(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_unicode_common.c#L169)
         calls one of:
-          * [`bool process_unicode(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_unicode.c#L20)
-          * [`bool process_unicodemap(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_unicodemap.c#L46)
-          * [`bool process_ucis(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_ucis.c#L95)
-      * [`bool process_leader(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_leader.c#L51)
-      * [`bool process_combo(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_combo.c#L115)
-      * [`bool process_printer(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_printer.c#L77)
-      * [`bool process_auto_shift(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_auto_shift.c#L94)
-      * [`bool process_terminal(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/process_keycode/process_terminal.c#L264)
-      * [Identify and process Quantum-specific keycodes](https://github.com/qmk/qmk_firmware/blob/2debbe4a7525022db984eaa6435513ce801f1f61/quantum/quantum.c#L284-L777)
+          * [`bool process_unicode(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_unicode.c#L20)
+          * [`bool process_unicodemap(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_unicodemap.c#L46)
+          * [`bool process_ucis(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_ucis.c#L95)
+      * [`bool process_leader(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_leader.c#L51)
+      * [`bool process_combo(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_combo.c#L115)
+      * [`bool process_printer(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_printer.c#L77)
+      * [`bool process_auto_shift(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_auto_shift.c#L94)
+      * [`bool process_terminal(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/process_keycode/process_terminal.c#L264)
+      * [Identify and process Quantum-specific keycodes](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L309-L802)
+      * [`bool process_action_kb(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/keyboards/bpiphany/pegasushoof/pegasushoof.c#L53)
 
 At any step during this chain of events a function (such as `process_record_kb()`) can `return false` to halt all further processing.
 
-After this is called, `post_process_record()` is called, which can be used to handle additional cleanup that needs to be run after the keycode is normally handled. 
+After this is done, `post_process_record()` is called, which can be used to handle additional cleanup that needs to be run after the keycode is normally handled.
 
 * [`void post_process_record(keyrecord_t *record)`]()
-  * [`void post_process_record_quantum(keyrecord_t *record)`]()
-    * [Map this record to a keycode]()
+  * [`void post_process_record_quantum(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L241)
+    * [`uint16_t get_record_keycode(keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L215)
+      * [`uint16_t get_event_keycode(keyevent_t event)`](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/quantum/quantum.c#L222)
     * [`void post_process_clicky(uint16_t keycode, keyrecord_t *record)`]()
     * [`void post_process_record_kb(uint16_t keycode, keyrecord_t *record)`]()
       * [`void post_process_record_user(uint16_t keycode, keyrecord_t *record)`]()
