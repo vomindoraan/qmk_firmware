@@ -213,8 +213,6 @@ static bool grave_esc_was_shifted = false;
 
 uint16_t get_record_keycode(keyrecord_t *record) {
   /* This gets the keycode from the key pressed */
-  keypos_t key = record->event.key;
-  uint16_t keycode;
 
   #if !defined(NO_ACTION_LAYER) && !defined(STRICT_LAYER_RELEASE)
     /* TODO: Use store_or_get_action() or a similar function. */
@@ -222,15 +220,15 @@ uint16_t get_record_keycode(keyrecord_t *record) {
       uint8_t layer;
 
       if (record->event.pressed) {
-        layer = layer_switch_get_layer(key);
-        update_source_layers_cache(key, layer);
+        layer = layer_switch_get_layer(record->event.key);
+        update_source_layers_cache(record->event.key, layer);
       } else {
-        layer = read_source_layers_cache(key);
+        layer = read_source_layers_cache(record->event.key);
       }
-      return keycode = keymap_key_to_keycode(layer, key);
+      return keymap_key_to_keycode(layer, record->event.key);
     } else
   #endif
-    return keymap_key_to_keycode(layer_switch_get_layer(key), key);
+    return keymap_key_to_keycode(layer_switch_get_layer(record->event.key), record->event.key);
 }
 
 void post_process_record_quantum(keyrecord_t *record) {
