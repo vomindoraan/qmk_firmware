@@ -157,7 +157,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 __attribute__ ((weak))
 void post_process_record_kb(uint16_t keycode, keyrecord_t *record) {
-  process_record_user(keycode, record);
+  post_process_record_user(keycode, record);
 }
 
 __attribute__ ((weak))
@@ -235,6 +235,7 @@ void post_process_record_quantum(keyrecord_t *record) {
   uint16_t keycode = get_record_keycode(record);
   post_process_record_kb(keycode, record);
 }
+
 bool process_record_quantum(keyrecord_t *record) {
     uint16_t keycode = get_record_keycode(record);
 
