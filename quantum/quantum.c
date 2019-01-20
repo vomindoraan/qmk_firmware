@@ -248,16 +248,11 @@ void post_process_record_quantum(keyrecord_t *record) {
     then processes internal quantum keycodes, and then processes
     ACTIONs.                                                      */
 bool process_record_quantum(keyrecord_t *record) {
-    uint16_t keycode = get_record_keycode(record);
+  uint16_t keycode = get_record_keycode(record);
+  return process_keycode(keycode, record);
+}
 
-    // This is how you use actions here
-    // if (keycode == KC_LEAD) {
-    //   action_t action;
-    //   action.code = ACTION_DEFAULT_LAYER_SET(0);
-    //   process_action(record, action);
-    //   return false;
-    // }
-
+bool process_keycode(uint16_t keycode, keyrecord_t *record) {
   #ifdef TAP_DANCE_ENABLE
     preprocess_tap_dance(keycode, record);
   #endif
@@ -310,8 +305,6 @@ bool process_record_quantum(keyrecord_t *record) {
       true)) {
     return false;
   }
-
-  // Shift / paren setup
 
   switch(keycode) {
     case RESET:
