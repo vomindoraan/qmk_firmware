@@ -1112,8 +1112,7 @@ static const uint8_t backlight_pin = BACKLIGHT_PIN;
 #ifdef NO_HARDWARE_PWM // pwm through software
 
 __attribute__ ((weak))
-void backlight_init_ports(void)
-{
+void backlight_init_ports(void) {
   // Setup backlight pin as output and output to on state.
   // DDRx |= n
   _SFR_IO8((backlight_pin >> 4) + 1) |= _BV(backlight_pin & 0xF);
@@ -1225,15 +1224,13 @@ bool is_breathing(void) {
 #define breathing_min() do {breathing_counter = 0;} while (0)
 #define breathing_max() do {breathing_counter = breathing_period * 244 / 2;} while (0)
 
-void breathing_enable(void)
-{
+void breathing_enable(void) {
   breathing_counter = 0;
   breathing_halt = BREATHING_NO_HALT;
   breathing_interrupt_enable();
 }
 
-void breathing_pulse(void)
-{
+void breathing_pulse(void) {
     if (get_backlight_level() == 0)
       breathing_min();
     else
@@ -1242,15 +1239,13 @@ void breathing_pulse(void)
     breathing_interrupt_enable();
 }
 
-void breathing_disable(void)
-{
+void breathing_disable(void) {
     breathing_interrupt_disable();
     // Restore backlight level
     backlight_set(get_backlight_level());
 }
 
-void breathing_self_disable(void)
-{
+void breathing_self_disable(void) {
   if (get_backlight_level() == 0)
     breathing_halt = BREATHING_HALT_OFF;
   else
@@ -1264,8 +1259,7 @@ void breathing_toggle(void) {
     breathing_enable();
 }
 
-void breathing_period_set(uint8_t value)
-{
+void breathing_period_set(uint8_t value) {
   if (!value)
     value = 1;
   breathing_period = value;
@@ -1275,13 +1269,11 @@ void breathing_period_default(void) {
   breathing_period_set(BREATHING_PERIOD);
 }
 
-void breathing_period_inc(void)
-{
+void breathing_period_inc(void) {
   breathing_period_set(breathing_period+1);
 }
 
-void breathing_period_dec(void)
-{
+void breathing_period_dec(void) {
   breathing_period_set(breathing_period-1);
 }
 
@@ -1298,8 +1290,7 @@ static inline uint16_t scale_backlight(uint16_t v) {
 /* Assuming a 16MHz CPU clock and a timer that resets at 64k (ICR1), the following interrupt handler will run
  * about 244 times per second.
  */
-ISR(TIMER1_OVF_vect)
-{
+ISR(TIMER1_OVF_vect) {
   uint16_t interval = (uint16_t) breathing_period * 244 / BREATHING_STEPS;
   // resetting after one period to prevent ugly reset at overflow.
   breathing_counter = (breathing_counter + 1) % (breathing_period * 244);
@@ -1317,8 +1308,7 @@ ISR(TIMER1_OVF_vect)
 #endif // BACKLIGHT_BREATHING
 
 __attribute__ ((weak))
-void backlight_init_ports(void)
-{
+void backlight_init_ports(void) {
   // Setup backlight pin as output and output to on state.
   // DDRx |= n
   _SFR_IO8((backlight_pin >> 4) + 1) |= _BV(backlight_pin & 0xF);
@@ -1412,8 +1402,7 @@ void send_nibble(uint8_t number) {
 
 
 __attribute__((weak))
-uint16_t hex_to_keycode(uint8_t hex)
-{
+uint16_t hex_to_keycode(uint8_t hex) {
   hex = hex & 0xF;
   if (hex == 0x0) {
     return KC_0;
@@ -1443,14 +1432,12 @@ void led_set_kb(uint8_t usb_led) {
 }
 
 __attribute__ ((weak))
-void led_init_ports(void)
-{
+void led_init_ports(void) {
 
 }
 
 __attribute__ ((weak))
-void led_set(uint8_t usb_led)
-{
+void led_set(uint8_t usb_led) {
 
   // Example LED Code
   //
