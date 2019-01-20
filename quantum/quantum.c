@@ -211,16 +211,15 @@ static uint16_t scs_timer[2] = {0, 0};
  */
 static bool grave_esc_was_shifted = false;
 
-/* Calls get get_event_keycode to handle the conversion*/
+/* Convert record into usable keycode via the contained event */
 uint16_t get_record_keycode(keyrecord_t *record) {
   return get_event_keycode(record->event);
 }
 
-/* Convert event into usable keycode, checks the layer cache to ensure that it
-      retains the correct keycode after a layer change, if it's still pressed. */
+/* Convert event into usable keycode. Checks the layer cache to ensure that it
+ * retains the correct keycode after a layer change, if it's still pressed.
+ */
 uint16_t get_event_keycode(keyevent_t event) {
-  /* This gets the keycode from the key pressed */
-
   #if !defined(NO_ACTION_LAYER) && !defined(STRICT_LAYER_RELEASE)
     /* TODO: Use store_or_get_action() or a similar function. */
     if (!disable_action_cache) {
@@ -238,20 +237,21 @@ uint16_t get_event_keycode(keyevent_t event) {
     return keymap_key_to_keycode(layer_switch_get_layer(event.key), event.key);
 }
 
-/* Get keycode, and then call keyboard function */
+/* Get keycode, then call keyboard-specific postprocessing function */
 void post_process_record_quantum(keyrecord_t *record) {
   uint16_t keycode = get_record_keycode(record);
   post_process_record_kb(keycode, record);
 }
 
-/* Core keycode function, hands off handling to other functions,
-    then processes internal quantum keycodes, and then processes
-    ACTIONs.                                                      */
+/* Get keycode, then call main processing function. */
 bool process_record_quantum(keyrecord_t *record) {
   uint16_t keycode = get_record_keycode(record);
   return process_keycode(keycode, record);
 }
 
+/* Main keycode processing function. Hands off handling to other functions, then
+ * processes internal Quantum keycodes, then processes ACTIONs.
+ */
 bool process_keycode(uint16_t keycode, keyrecord_t *record) {
   #ifdef TAP_DANCE_ENABLE
     preprocess_tap_dance(keycode, record);
