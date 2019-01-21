@@ -22,7 +22,7 @@ This section of code is called "The Main Loop" because it's responsible for loop
     keyboard_task();
 ```
 
-This is where all the keyboard specific functionality is dispatched. The source code for `keyboard_task()` can be found in [tmk_core/common/keyboard.c](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/tmk_core/common/keyboard.c#L216), and it is responsible for detecting changes in the matrix and turning status LED's on and off.
+This is where all the keyboard specific functionality is dispatched. The source code for `keyboard_task()` can be found in [tmk_core/common/keyboard.c](https://github.com/qmk/qmk_firmware/blob/c03ad16db77cdad74f7b9e63da1b766cb11d4e38/tmk_core/common/keyboard.c#L216), and it is responsible for detecting changes in the matrix and turning status LEDs on and off.
 
 Within `keyboard_task()` you'll find code to handle:
 
@@ -30,7 +30,7 @@ Within `keyboard_task()` you'll find code to handle:
 * Mouse Handling
 * Serial Link(s)
 * Visualizer
-* Keyboard status LED's (Caps Lock, Num Lock, Scroll Lock)
+* Keyboard status LEDs (Caps Lock, Num Lock, Scroll Lock)
 
 #### Matrix Scanning
 
@@ -186,7 +186,7 @@ FIXME: This needs to be written
 
 FIXME: This needs to be written
 
-#### Keyboard state LED's (Caps Lock, Num Lock, Scroll Lock)
+#### Keyboard state LEDs (Caps Lock, Num Lock, Scroll Lock)
 
 FIXME: This needs to be written
 

@@ -190,7 +190,6 @@ void reset_keyboard(void) {
 }
 
 // Shift / paren setup
-
 #ifndef LSPO_KEY
   #define LSPO_KEY KC_9
 #endif
@@ -211,13 +210,13 @@ static uint16_t scs_timer[2] = {0, 0};
  */
 static bool grave_esc_was_shifted = false;
 
-/* Convert record into usable keycode via the contained event */
+/* Convert record into usable keycode via the contained event. */
 uint16_t get_record_keycode(keyrecord_t *record) {
   return get_event_keycode(record->event);
 }
 
 /* Convert event into usable keycode. Checks the layer cache to ensure that it
- * retains the correct keycode after a layer change, if it's still pressed.
+ * retains the correct keycode after a layer change if the key is still pressed.
  */
 uint16_t get_event_keycode(keyevent_t event) {
   #if !defined(NO_ACTION_LAYER) && !defined(STRICT_LAYER_RELEASE)
@@ -237,7 +236,7 @@ uint16_t get_event_keycode(keyevent_t event) {
     return keymap_key_to_keycode(layer_switch_get_layer(event.key), event.key);
 }
 
-/* Get keycode, then call keyboard-specific postprocessing function */
+/* Get keycode, then call keyboard-specific postprocessing function. */
 void post_process_record_quantum(keyrecord_t *record) {
   uint16_t keycode = get_record_keycode(record);
   post_process_record_kb(keycode, record);
@@ -1174,7 +1173,7 @@ static uint16_t cie_lightness(uint16_t v) {
 
 // range for val is [0..TIMER_TOP]. PWM pin is high while the timer count is below val.
 static inline void set_pwm(uint16_t val) {
-	OCRxx = val;
+  OCRxx = val;
 }
 
 #ifndef BACKLIGHT_CUSTOM_DRIVER
