@@ -63,9 +63,9 @@ void matrix_init_user(void) {
 void matrix_scan_user(void) {
 };
 
-#define MODS_SHIFT  (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
-#define MODS_CTRL  (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
-#define MODS_ALT  (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
+#define MODS_SHIFT  (get_all_mods() & MOD_BIT(KC_LSHIFT) || get_all_mods() & MOD_BIT(KC_RSHIFT))
+#define MODS_CTRL  (get_all_mods() & MOD_BIT(KC_LCTL) || get_all_mods() & MOD_BIT(KC_RCTRL))
+#define MODS_ALT  (get_all_mods() & MOD_BIT(KC_LALT) || get_all_mods() & MOD_BIT(KC_RALT))
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
