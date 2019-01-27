@@ -28,8 +28,8 @@
 
 /* key combination for command */
 #define IS_COMMAND() ( \
-    get_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)) || \
-    get_mods() == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
+    get_all_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)) || \
+    get_all_mods() == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
 )
 
 #endif /* KEYBOARDS_ERGODOX_CONFIG_H_ */
