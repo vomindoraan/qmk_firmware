@@ -2,9 +2,7 @@
 
 #include "quantum.h"
 
-#define DESKTOP TD(TD_DESKTOP)
-#define DSKTP_L LCTL(LGUI(KC_LEFT))
-#define DSKTP_R LCTL(LGUI(KC_RGHT))
+#define DST_N_C TD(TD_DST_N_C)
 
 #define RAL_LAL TD(TD_RAL_LAL)
 #define RAL_RGU TD(TD_RAL_RGU)
@@ -14,7 +12,7 @@
 #define LSFT_FN TD(TD_LSFT_FN)
 
 enum tap_dance {
-  TD_DESKTOP,
+  TD_DST_N_C,
 
   TD_RAL_LAL,
   TD_RAL_RGU,
