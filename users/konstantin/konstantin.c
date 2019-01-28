@@ -30,13 +30,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   case DST_L_C:
     (record->event.pressed ? register_code16 : unregister_code16)(
-      (get_mods() & MOD_MASK_CTRL) ? DST_CLS : DST_LFT
+      (get_mods() & DST_SELECTOR_MODS) ? DST_CLS : DST_LFT
     );
     return false;
 
   case DST_R_N:
     (record->event.pressed ? register_code16 : unregister_code16)(
-      (get_mods() & MOD_MASK_CTRL) ? DST_NEW : DST_RGT
+      (get_mods() & DST_SELECTOR_MODS) ? DST_NEW : DST_RGT
     );
     return false;
 
