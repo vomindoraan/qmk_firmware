@@ -336,7 +336,7 @@ bool process_terminal(uint16_t keycode, keyrecord_t *record) {
                 default:
                     if (keycode <= 58) {
                         char_to_add = 0;
-                        if (get_mods() & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))) {
+                        if (get_mods() & MOD_MASK_SHIFT) {
                             char_to_add = shifted_keycode_to_ascii_lut[keycode];
                         } else if (get_mods() == 0) {
                             char_to_add = keycode_to_ascii_lut[keycode];

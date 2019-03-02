@@ -382,7 +382,7 @@ bool process_record_quantum(keyrecord_t *record) {
     return false;
   case RGB_MODE_FORWARD:
     if (record->event.pressed) {
-      uint8_t shifted = get_mods() & (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT));
+      uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
       if(shifted) {
         rgblight_step_reverse();
       }
@@ -393,7 +393,7 @@ bool process_record_quantum(keyrecord_t *record) {
     return false;
   case RGB_MODE_REVERSE:
     if (record->event.pressed) {
-      uint8_t shifted = get_mods() & (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT));
+      uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
       if(shifted) {
         rgblight_step();
       }
@@ -773,13 +773,12 @@ bool process_record_quantum(keyrecord_t *record) {
     }
 
     case GRAVE_ESC: {
-      uint8_t shifted = get_mods() & ((MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT)
-                                      |MOD_BIT(KC_LGUI)|MOD_BIT(KC_RGUI)));
+      uint8_t shifted = get_mods() & MOD_MASK_SG;
 
 #ifdef GRAVE_ESC_ALT_OVERRIDE
       // if ALT is pressed, ESC is always sent
       // this is handy for the cmd+opt+esc shortcut on macOS, among other things.
-      if (get_mods() & (MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT))) {
+      if (get_mods() & MOD_MASK_ALT) {
         shifted = 0;
       }
 #endif
@@ -787,21 +786,21 @@ bool process_record_quantum(keyrecord_t *record) {
 #ifdef GRAVE_ESC_CTRL_OVERRIDE
       // if CTRL is pressed, ESC is always sent
       // this is handy for the ctrl+shift+esc shortcut on windows, among other things.
-      if (get_mods() & (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL))) {
+      if (get_mods() & MOD_MASK_CTRL) {
         shifted = 0;
       }
 #endif
 
 #ifdef GRAVE_ESC_GUI_OVERRIDE
       // if GUI is pressed, ESC is always sent
-      if (get_mods() & (MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI))) {
+      if (get_mods() & MOD_MASK_GUI) {
         shifted = 0;
       }
 #endif
 
 #ifdef GRAVE_ESC_SHIFT_OVERRIDE
       // if SHIFT is pressed, ESC is always sent
-      if (get_mods() & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))) {
+      if (get_mods() & MOD_MASK_SHIFT) {
         shifted = 0;
       }
 #endif
