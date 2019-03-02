@@ -18,8 +18,6 @@
 #include QMK_KEYBOARD_H
 #include "turbomech.h"
 
-#define MODS_CTRL_MASK  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
-
 #define _QWERTY 0 //BASE layer
 #define _FUNCTION 1 //Function layer
 
@@ -153,7 +151,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
   static uint8_t shift_esc_shift_mask;
   switch (id) {
     case SHIFT_ESC:
-      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
+      shift_esc_shift_mask = get_mods() & MOD_MASK_SHIFT;
       if (record->event.pressed) {
         if (shift_esc_shift_mask) {
           add_key(KC_GRV);

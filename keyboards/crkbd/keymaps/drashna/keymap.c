@@ -181,16 +181,14 @@ const char *read_keylogs(void) {
   return keylogs_str;
 }
 
-
 const char* read_modifier_state(void) {
-  uint8_t modifiers = get_mods();
-  uint8_t one_shot = get_oneshot_mods();
+  uint8_t mods = get_all_mods();
 
-  snprintf(modifier_state_str, sizeof(modifier_state_str), "Mods:%s %s %s %s",
-    (modifiers & MOD_MASK_CTRL || one_shot & MOD_MASK_CTRL) ? "CTL" : "   ",
-    (modifiers & MOD_MASK_GUI || one_shot & MOD_MASK_GUI) ? "GUI" : "   ",
-    (modifiers & MOD_MASK_ALT || one_shot & MOD_MASK_ALT) ? "ALT" : "   ",
-    (modifiers & MOD_MASK_SHIFT || one_shot & MOD_MASK_SHIFT) ? "SFT" : "   "
+  snprintf(modifier_state_str, sizeof(modifier_state_str), "Mods: %s %s %s %s",
+    (mods & MOD_MASK_CTRL ) ? "CTL" : "   ",
+    (mods & MOD_MASK_GUI  ) ? "GUI" : "   ",
+    (mods & MOD_MASK_ALT  ) ? "ALT" : "   ",
+    (mods & MOD_MASK_SHIFT) ? "SFT" : "   "
   );
 
   return modifier_state_str;

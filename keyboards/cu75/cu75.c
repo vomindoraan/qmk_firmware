@@ -106,7 +106,7 @@ void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
     if(id == LFK_ESC_TILDE){
         // Send ~ on shift-esc
         void (*method)(uint8_t) = (event->event.pressed) ? &add_key : &del_key;
-        uint8_t shifted = get_mods() & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT));
+        uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
         method(shifted ? KC_GRAVE : KC_ESCAPE);
         send_keyboard_report();
     }else if(event->event.pressed){

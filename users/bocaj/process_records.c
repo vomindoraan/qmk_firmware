@@ -53,7 +53,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_MAKE:  // Compiles the firmware, and adds the flash command based on keyboard bootloader
       if (!record->event.pressed) {
         uint8_t temp_mod = get_mods();
-        uint8_t temp_osm = get_oneshot_mods();
         clear_mods();
         clear_oneshot_mods();
         if (biton32(default_layer_state) == _WINWORKMAN) {
@@ -61,10 +60,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           send_string_with_delay_P(PSTR("util/docker_build.sh " QMK_KEYBOARD ":" QMK_KEYMAP), 10);
         }
-        if (temp_mod & MODS_SHIFT_MASK) {
+        if (temp_mod & MOD_MASK_SHIFT) {
           send_string_with_delay_P(PSTR(":teensy"), 10);
         }
-        if (temp_mod & MODS_CTRL_MASK) {
+        if (temp_mod & MOD_MASK_CTRL) {
           send_string_with_delay_P(PSTR(" -j8 --output-sync"), 10);
         }
         send_string_with_delay_P(PSTR(SS_TAP(X_ENTER)), 10);
@@ -93,10 +92,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         grave_layer_timer = timer_read();
       } else {
         if (timer_elapsed(grave_layer_timer) < TAPPING_TERM) {
-          uint8_t temp_mod = get_mods();
-          uint8_t one_shot = get_oneshot_mods();
+          uint8_t temp_mod = get_all_mods();
           clear_mods();
-          if (temp_mod & MODS_SHIFT_MASK || one_shot & MODS_SHIFT_MASK) {
+          if (temp_mod & MOD_MASK_SHIFT) {
             register_code(KC_LSFT);
             tap(KC_GRAVE);
             unregister_code(KC_LSFT);

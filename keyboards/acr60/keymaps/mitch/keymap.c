@@ -11,8 +11,6 @@
 #define GUIOFF MAGIC_NO_GUI
 #define GUION MAGIC_UNNO_GUI
 
-#define MODS_CTRL_MASK  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
-
 /* TODO: create handy quick-ref list here for easy grokking of the actual shortcuts in place */
 
 /*
@@ -182,7 +180,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
   static uint8_t shift_esc_shift_mask;
   switch (id) {
     case SHIFT_ESC:
-      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
+      shift_esc_shift_mask = get_mods() & MOD_MASK_SHIFT;
       if (record->event.pressed) {
         if (shift_esc_shift_mask) {
           add_key(KC_GRV);

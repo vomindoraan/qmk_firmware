@@ -1,7 +1,5 @@
 #include QMK_KEYBOARD_H
 
-#define MODS_SHIFT_MASK (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
-
 enum custom_keycodes {
   SFT_ESC = SAFE_RANGE
 };
@@ -42,7 +40,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case SFT_ESC:
       if (record->event.pressed) {
-        if (get_mods() & MODS_SHIFT_MASK) {
+        if (get_mods() & MOD_MASK_SHIFT) {
           add_key(KC_GRV);
           send_keyboard_report();
         } else {
@@ -50,7 +48,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           send_keyboard_report();
         }
       } else {
-        if (get_mods() & MODS_SHIFT_MASK) {
+        if (get_mods() & MOD_MASK_SHIFT) {
           del_key(KC_GRV);
           send_keyboard_report();
         } else {

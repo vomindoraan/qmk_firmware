@@ -92,9 +92,9 @@ At the top of the file you'll find this:
     #include QMK_KEYBOARD_H
 
     // Helpful defines
-    #define GRAVE_MODS  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT)|MOD_BIT(KC_LGUI)|MOD_BIT(KC_RGUI)|MOD_BIT(KC_LALT)|MOD_BIT(KC_RALT))
+    #define GRAVE_MODS MOD_MASK_SAG
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *  You can use _______ in place for KC_TRNS (transparent)   *
      *  Or you can use XXXXXXX for KC_NO (NOOP)                  *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

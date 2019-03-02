@@ -24,7 +24,6 @@ enum planck_keycodes {
 };
 
 // Useful defines
-#define MODS_CTRL_MASK  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
 #define FN_CAPS     LT(_FL, KC_CAPS)            // Tap for Caps Lock, Hold for Function Layer
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -97,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, MO(_CL), _______, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, _______, _______,                            \
   _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______, _______,          KC_PGUP,          \
   _______, _______, _______, _______,          _______, _______,                            _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_END),
-  
+
   /* Keymap _CL: Control layer
    */
 [_CL] = LAYOUT (

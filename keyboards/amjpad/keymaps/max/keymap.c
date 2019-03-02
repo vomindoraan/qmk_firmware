@@ -4,9 +4,6 @@
 #include "rgblight.h"
 #endif
 
-// Used for SHIFT_ESC
-#define MODS_CTRL_MASK  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
-
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -77,7 +74,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
   static uint8_t shift_esc_shift_mask;
   switch (id) {
     case SHIFT_ESC:
-      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
+      shift_esc_shift_mask = get_mods() & MOD_MASK_SHIFT;
       if (record->event.pressed) {
         if (shift_esc_shift_mask) {
           add_key(KC_GRV);

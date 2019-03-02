@@ -19,11 +19,6 @@ enum layers {
 #define RAISE MO(_raise)
 #define RGB MO(_rgb)
 
-// define mod masks for making multi-key macros
-#define MODS_SHIFT_MASK  (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))
-#define MODS_CTRL_MASK  (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTRL))
-#define MODS_ALT_MASK  (MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT))
-
 //********************************** Layers **********************************//
 // define layers
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -122,7 +117,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   return MACRO_NONE;
 }
 
-// initialize matrix 
+// initialize matrix
 void matrix_init_user(void) {
 }
 
