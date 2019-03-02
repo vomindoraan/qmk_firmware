@@ -94,9 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define FORCE_NKRO
 
 /* key combination for command */
-#define IS_COMMAND() ( \
-    get_mods() == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT) | MOD_BIT(KC_LCTRL) | MOD_BIT(KC_RCTRL)) \
-)
+#define IS_COMMAND() (get_mods() == MOD_MASK_CS)
 
 /* control how magic key switches layers */
 //#define MAGIC_KEY_SWITCH_LAYER_WITH_FKEYS  true

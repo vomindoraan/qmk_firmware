@@ -55,8 +55,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key combination for command */
 #define IS_COMMAND() ( \
-    get_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)) || \
-    get_mods() == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
+    get_mods() == MOD_MASK_CTRL || \
+    get_mods() == MOD_MASK_SHIFT \
 )
 
 /* number of backlight levels */

@@ -132,7 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key combination for magic key command */
 /* defined by default; to change, uncomment and set to the combination you want */
-// #define IS_COMMAND() (get_mods() == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
+// #define IS_COMMAND() (get_mods() == MOD_MASK_SHIFT)
 
 /* control how magic key switches layers */
 //#define MAGIC_KEY_SWITCH_LAYER_WITH_FKEYS  true
@@ -262,5 +262,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR = DYNAMIC_KEYMAP_EEPROM_ADDR + (DYNAMIC_KEYMAP_LAYER_COUNT * MATRIX_ROWS * MATRIX_COLS * 2)
 #define DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR 635
 // DYNAMIC_KEYMAP_MACRO_EEPROM_SIZE = 1024 - DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR
-#define DYNAMIC_KEYMAP_MACRO_EEPROM_SIZE 389   
+#define DYNAMIC_KEYMAP_MACRO_EEPROM_SIZE 389
 #define DYNAMIC_KEYMAP_MACRO_COUNT 16
