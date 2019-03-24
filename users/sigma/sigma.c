@@ -66,7 +66,7 @@ void set_os(uint8_t os) {
 
   switch (os) {
   case _OS_MACOS:
-    set_unicode_input_mode(UC_OSX);
+    set_unicode_input_mode(UC_MAC);
     break;
   case _OS_LINUX:
     set_unicode_input_mode(UC_LNX);

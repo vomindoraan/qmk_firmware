@@ -37,4 +37,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Unicode input
 #undef UNICODE_SELECTED_MODES
-#define UNICODE_SELECTED_MODES UC_OSX, UC_LNX, UC_WINC
+#define UNICODE_SELECTED_MODES UC_MAC, UC_LNX, UC_WINC

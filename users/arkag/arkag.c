@@ -199,7 +199,7 @@ void set_os (uint8_t os, bool update) {
   }
   switch (os) {
   case OS_MAC:
-    set_unicode_input_mode(UC_OSX);
+    set_unicode_input_mode(UC_MAC);
     underglow = (Color){ 300, 255, 255 };
     mod_primary_mask = MOD_GUI_MASK;
     break;

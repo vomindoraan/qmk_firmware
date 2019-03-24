@@ -36,7 +36,7 @@ enum userspace_layers {
 };
 
 #if (defined(UNICODE_ENABLE) || defined(UNICODEMAP_ENABLE) || defined(UCIS_ENABLE))
-  #define BOCAJ_UNICODE_MODE UC_OSX
+  #define BOCAJ_UNICODE_MODE UC_MAC
 #else
   // set to 2 for UC_WIN, set to 4 for UC_WINC
   #define BOCAJ_UNICODE_MODE 2

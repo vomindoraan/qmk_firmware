@@ -179,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void eeconfig_init_user(void) {
 	set_unicode_input_mode(UC_LNX); // Linux
-	//set_unicode_input_mode(UC_OSX); // Mac OSX
+	//set_unicode_input_mode(UC_MAC); // macOS
 	//set_unicode_input_mode(UC_WIN); // Windows (with registry key, see wiki)
 	//set_unicode_input_mode(UC_WINC); // Windows (with WinCompose, see wiki)
 };

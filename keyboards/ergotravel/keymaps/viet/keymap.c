@@ -149,7 +149,7 @@ keypos_t prv_key_pressed;
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
 //    set_unicode_input_mode(UC_LNX); // Linux
-    set_unicode_input_mode(UC_OSX); // Mac OSX
+    set_unicode_input_mode(UC_MAC); // macOS
 //    set_unicode_input_mode(UC_WIN); // Windows (with registry key, see wiki)
     //set_unicode_input_mode(UC_WINC); // Windows (with WinCompose, see wiki)
 };

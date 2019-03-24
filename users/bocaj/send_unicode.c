@@ -64,7 +64,7 @@ void unicode_input_start (void) {
   clear_mods(); // Unregister mods to start from a clean state
 
   switch(get_unicode_input_mode()) {
-  case UC_OSX:
+  case UC_MAC:
     register_code(KC_LALT);
     break;
   case UC_LNX:
@@ -92,7 +92,7 @@ void unicode_input_start (void) {
 
 void unicode_input_finish (void) {
   switch(get_unicode_input_mode()) {
-    case UC_OSX:
+    case UC_MAC:
     case UC_WIN:
       unregister_code(KC_LALT);
       break;
