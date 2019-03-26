@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x1337
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    g Heavy Industries 
+#define MANUFACTURER    g Heavy Industries
 #define PRODUCT         Georgi
 #define DESCRIPTION     QMK keyboard firmware for Georgi
 
@@ -64,8 +64,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key combination for command */
 #define IS_COMMAND() ( \
-    get_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)) || \
-    get_mods() == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
+    get_mods() == MOD_MASK_CTRL || \
+    get_mods() == MOD_MASK_SHIFT \
 )
 
 #define DEBOUNCE    5
