@@ -1,6 +1,40 @@
 #include QMK_KEYBOARD_H
 #include "konstantin.h"
 
+#define TAP_CODE(code, delay)  (register_code(code), wait_ms(delay), unregister_code(code))
+#define TAP_CODE_NODELAY(code) (register_code(code), unregister_code(code))
+
+#define TAP_CODE16(code, delay)  (register_code16(code), wait_ms(delay), unregister_code16(code))
+#define TAP_CODE16_NODELAY(code) (register_code16(code), unregister_code16(code))
+
+#define TEST(macro, code) ( \
+  macro ## _NODELAY(code),  \
+  macro(code, 5),           \
+  macro(code, 10),          \
+  macro(code, 20),          \
+  macro(code, 50),          \
+  wait_ms(1000)             \
+)
+
+enum keycodes_keymap {
+  TAPTEST = RANGE_KEYMAP,
+};
+
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case TAPTEST:
+    TEST(TAP_CODE,   KC_A);
+    TEST(TAP_CODE16, KC_VOLU);
+    // TEST(TAP_CODE16, KC_MS_U);
+    // TEST(TAP_CODE16, KC_BTN1);
+    TEST(TAP_CODE16, KC_HASH);
+    return false;
+
+  default:
+    return true;
+  }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Base layer
    * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
@@ -29,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┼───┤
    * │ M4  │M2 │M↑ │M1 │M3 │M5 │   │UCM│   │Stp│Ply│Prv│Nxt│Clear│Ins│
    * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┼───┤
-   * │      │M← │M↓ │M→ │MW↑│   │   │   │   │   │   │   │        │Top│
+   * │      │M← │M↓ │M→ │MW↑│   │   │   │   │   │   │   │TapTest │Top│
    * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┼───┤
    * │        │MA0│MA2│MW←│MW→│   │   │   │Vo-│Vo+│Mut│ App  │PgU│Btm│
    * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬─┬───┼───┼───┤
@@ -39,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [L_FN] = LAYOUT_truefox( \
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  NUMPAD,  KC_SLCK, KC_PAUS, \
     KC_BTN4, KC_BTN2, KC_MS_U, KC_BTN1, KC_BTN3, KC_BTN5, _______, UC_MOD,  _______, KC_MSTP, KC_MPLY, KC_MPRV, KC_MNXT, CLEAR,            KC_INS,  \
-    _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,          _______,          TOP,     \
+    _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,          TAPTEST,          TOP,     \
     _______,          KC_ACL0, KC_ACL2, KC_WH_L, KC_WH_R, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_APP,           KC_PGUP, BOTTOM,  \
     _______, DST_P_R, DST_N_A,                            KC_WH_D,                   _______, _______,                   KC_HOME, KC_PGDN, KC_END   \
   ),
