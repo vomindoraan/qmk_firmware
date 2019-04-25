@@ -21,8 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * See https://web.archive.org/web/20060218214400/http://www.usb.org/developers/devclass_docs/Hut1_12.pdf
  * or http://www.usb.org/developers/hidpage/Hut1_12v2.pdf (older)
  */
-#ifndef KEYCODE_H
-#define KEYCODE_H
+#pragma once
 
 /* FIXME: Add doxygen comments here */
 
@@ -50,6 +49,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOD_MASK_RCTRL           MOD_BIT(KC_RCTRL)
 #define MOD_MASK_LSHIFT          MOD_BIT(KC_LSHIFT)
 #define MOD_MASK_RSHIFT          MOD_BIT(KC_RSHIFT)
+#define MOD_MASK_LCTL            MOD_MASK_LCTRL
+#define MOD_MASK_RCTL            MOD_MASK_RCTRL
+#define MOD_MASK_LSFT            MOD_MASK_LSHIFT
+#define MOD_MASK_RSFT            MOD_MASK_RSHIFT
 #define MOD_MASK_LALT            MOD_BIT(KC_LALT)
 #define MOD_MASK_RALT            MOD_BIT(KC_RALT)
 #define MOD_MASK_LGUI            MOD_BIT(KC_LGUI)
@@ -551,4 +554,3 @@ enum mouse_keys {
   KC_MS_ACCEL1,
   KC_MS_ACCEL2
 };
-#endif
