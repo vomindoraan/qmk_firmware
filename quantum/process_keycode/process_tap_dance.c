@@ -15,14 +15,7 @@
  */
 #include "quantum.h"
 #include "action_tapping.h"
-
-#ifndef TAPPING_TERM
-#define TAPPING_TERM 200
-#endif
-
-#ifndef NO_ACTION_ONESHOT
-uint8_t get_oneshot_mods(void);
-#endif
+#include "action_util.h"
 
 static uint16_t last_td;
 static int8_t highest_td = -1;
