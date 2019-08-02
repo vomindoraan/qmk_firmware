@@ -49,7 +49,8 @@ enum {
   TD_LC_CA,
   TD_F4_ALTF4,
   TD_C_SCL,
-  TD_D_CL
+  TD_D_CL,
+  TD_TOGGL
 };
 
 //Tap Dance Definitions
@@ -62,7 +63,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_LC_CA]  = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, LCTL(KC_A)),
   [TD_C_SCL]  = ACTION_TAP_DANCE_DOUBLE(KC_COMM, KC_SCLN),
   [TD_D_CL]  = ACTION_TAP_DANCE_DOUBLE(KC_DOT, LSFT(KC_SCLN)),
-  [TD_F4_ALTF4]  = ACTION_TAP_DANCE_DOUBLE(KC_F4, LALT(KC_F4))
+  [TD_F4_ALTF4]  = ACTION_TAP_DANCE_DOUBLE(KC_F4, LALT(KC_F4)),
+  [TD_TOGGL] = ACTION_TAP_DANCE_DOUBLE(LCTL(LWIN(LSFT(LALT(KC_H)))), LCTL(LWIN(LSFT(LALT(KC_K)))))
 // Other declarations would go here, separated by commas, if you have them
 };
 
@@ -70,7 +72,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define RAISE MO(_RAISE)
 #define FUNCT MO(_FUNCT)
 #define MOUSE MO(_MOUSE)
-#define LOWDEL LT(_LOWER, KC_DELETE)
+#define LOWBSP LT(_LOWER, KC_BSPC)
 #define RAISENT LT(_RAISE, KC_ENT)
 #define MSESC LT(_MOUSE, KC_ESC)
 #define FNTAB LT(_FUNCT, KC_TAB)
@@ -83,13 +85,21 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define F_CHR LALT(LSFT(KC_E))
 #define F_WIN LALT(LGUI(LSFT(KC_W)))
 #define CTLA CTL_T(KC_A)
+#define CTLQ CTL_T(KC_Q)
 #define CTLO CTL_T(KC_O)
+#define CTLQUOT CTL_T(KC_QUOT)
 #define GUIR GUI_T(KC_R)
+#define GUIW GUI_T(KC_W)
 #define GUII GUI_T(KC_I)
+#define GUIY GUI_T(KC_Y)
 #define ALTS ALT_T(KC_S)
+#define ALTF ALT_T(KC_F)
 #define ALTE ALT_T(KC_E)
+#define ALTU ALT_T(KC_U)
 #define SFTT SFT_T(KC_T)
+#define SFTP SFT_T(KC_P)
 #define SFTN SFT_T(KC_N)
+#define SFTL SFT_T(KC_L)
 
 #define ALLP ALT_T(KC_LBRC)
 #define SFRP SFT_T(KC_RBRC)
@@ -110,15 +120,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TDF4AF4 TD(TD_F4_ALTF4)
 #define TDCSCL TD(TD_C_SCL)
 #define TDDCL TD(TD_D_CL)
+#define TOGGLE TD(TD_TOGGL)
 #define xxxxx KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_planck_grid(
-  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     TDSTPR,   TDPLNX,   KC_J,    KC_L,      KC_U,     KC_Y,     TDQMIN, \
-  CTLA,     GUIR,     ALTS,     SFTT,     KC_G,     KC_BRID,  KC_BRIU,  KC_M,    SFTN,      ALTE,     GUII,     CTLO, \
-  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_VOLD,  KC_VOLU,  KC_K,    KC_H,      TDCSCL,   TDDCL,    TDSLBS, \
-  xxxxx,    xxxxx,    MSESC,    LOWDEL,   SHT_BSP,  KC_TAB,   xxxxx,    KC_SPC,  RAISENT,   FNTAB,    xxxxx,    xxxxx \
+  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     TDSTPR,   TDPLNX,   KC_J,     KC_L,      KC_U,     KC_Y,     TDQMIN, \
+  CTLA,     GUIR,     ALTS,     SFTT,     KC_G,     KC_BRID,  KC_BRIU,  KC_M,     SFTN,      ALTE,     GUII,     CTLO, \
+  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_VOLD,  KC_VOLU,  KC_K,     KC_H,      TDCSCL,   TDDCL,    TDSLBS, \
+  xxxxx,    xxxxx,    MSESC,    LOWBSP,   KC_LSFT,  KC_DEL,   KC_TAB,   KC_SPC,   RAISENT,   FNTAB,    xxxxx,    TOGGLE \
 ),
 
 [_LOWER] = LAYOUT_planck_grid(
@@ -132,7 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	DIVVY,    F_CHR,    F_WIN,    xxxxx,    xxxxx,    xxxxx,    xxxxx,    KC_PGUP,	KC_HOME,  KC_UP,    KC_END,   xxxxx,  \
 	KC_LCTL,	KC_LWIN,  KC_LALT,  KC_LSFT,  xxxxx,    xxxxx,    xxxxx,    KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT,	KC_INS,  \
 	xxxxx,  	KC_X,     xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,   	xxxxx,    \
-	xxxxx,  	xxxxx,    _______,  _______,  xxxxx,    xxxxx,    xxxxx,  	xxxxx,    xxxxx,    xxxxx,    xxxxx,  	xxxxx  \
+	xxxxx,  	xxxxx,    _______,  _______,  xxxxx,    KC_TAB,   xxxxx,  	KC_SPC,    xxxxx,    xxxxx,    xxxxx,  	xxxxx  \
 ),
 
 [_FUNCT] = LAYOUT_planck_grid(
