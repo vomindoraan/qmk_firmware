@@ -121,8 +121,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TDCSCL TD(TD_C_SCL)
 #define TDDCL TD(TD_D_CL)
 #define TOGGLE TD(TD_TOGGL)
+<<<<<<< HEAD
 #define VD_RGHT LGUI(LCTL(KC_RGHT))
 #define VD_LEFT LGUI(LCTL(KC_LEFT))
+=======
+>>>>>>> 2ce9e60b1e7437e93f92f658c72cd117caf768eb
 #define xxxxx KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -131,7 +134,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     TDSTPR,   TDPLNX,   KC_J,     KC_L,      KC_U,     KC_Y,     TDQMIN, \
   CTLA,     GUIR,     ALTS,     SFTT,     KC_G,     KC_BRID,  KC_BRIU,  KC_M,     SFTN,      ALTE,     GUII,     CTLO, \
   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_VOLD,  KC_VOLU,  KC_K,     KC_H,      TDCSCL,   TDDCL,    TDSLBS, \
+<<<<<<< HEAD
   VD_LEFT,    xxxxx,    MSESC,    LOWBSP,   KC_LSFT,  KC_DEL,   KC_TAB,   KC_SPC,   RAISENT,   FNTAB,    xxxxx,    VD_RGHT \
+=======
+  xxxxx,    xxxxx,    MSESC,    LOWBSP,   KC_LSFT,  KC_DEL,   KC_TAB,   KC_SPC,   RAISENT,   FNTAB,    xxxxx,    TOGGLE \
+>>>>>>> 2ce9e60b1e7437e93f92f658c72cd117caf768eb
 ),
 
 [_LOWER] = LAYOUT_planck_grid(
