@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#ifndef LED_MATRIX_H
-#define LED_MATRIX_H
+#pragma once
 
 #ifndef BACKLIGHT_ENABLE
 #    error You must define BACKLIGHT_ENABLE with LED_MATRIX_ENABLE
@@ -123,5 +121,3 @@ typedef struct {
 } led_matrix_driver_t;
 
 extern const led_matrix_driver_t led_matrix_driver;
-
-#endif
