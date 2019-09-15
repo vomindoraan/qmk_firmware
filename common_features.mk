@@ -132,7 +132,7 @@ endif
 ifeq ($(strip $(LED_MATRIX_ENABLE)), IS31FL3731)
     OPT_DEFS += -DIS31FL3731
     COMMON_VPATH += $(DRIVER_PATH)/issi
-    SRC += is31fl3731-simple.c
+    SRC += is31fl3731_single.c
     QUANTUM_LIB_SRC += i2c_master.c
 endif
 

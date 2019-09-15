@@ -31,7 +31,7 @@
 #if defined(IS31FL3731) || defined(IS31FL3733)
 
 #    if defined(IS31FL3731)
-#        include "is31fl3731-simple.h"
+#        include "is31fl3731_single.h"
 #    endif
 
 #    include "i2c_master.h"

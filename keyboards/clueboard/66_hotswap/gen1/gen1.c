@@ -16,7 +16,7 @@
 #include "gen1.h"
 
 #ifdef LED_MATRIX_ENABLE
-    #include "is31fl3731-simple.h"
+    #include "is31fl3731_single.h"
 
 const is31_led g_is31_leds[LED_DRIVER_LED_COUNT] = {
 /* Refer to IS31 manual for these locations

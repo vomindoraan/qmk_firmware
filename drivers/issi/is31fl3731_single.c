@@ -27,7 +27,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-#include "is31fl3731-simple.h"
+#include "is31fl3731_single.h"
 #include "i2c_master.h"
 #include "progmem.h"
 #include "print.h"
