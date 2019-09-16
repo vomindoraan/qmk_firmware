@@ -39,7 +39,7 @@ typedef struct led_matrix {
     uint8_t modifier : 1;
 } __attribute__((packed)) led_matrix;
 
-extern const led_matrix g_leds[LED_DRIVER_LED_COUNT];
+extern const led_matrix g_leds[LED_DRIVER_LED_TOTAL];
 
 typedef struct {
     uint8_t index;
