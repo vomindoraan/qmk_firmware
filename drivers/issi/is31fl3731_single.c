@@ -77,17 +77,8 @@ uint8_t g_twi_transfer_buffer[20];
 uint8_t g_pwm_buffer[LED_DRIVER_COUNT][144];
 bool    g_pwm_buffer_update_required = false;
 
-/* There's probably a better way to init this... */
-#if LED_DRIVER_COUNT == 1
 uint8_t g_led_control_registers[LED_DRIVER_COUNT][18] = {{0}};
-#elif LED_DRIVER_COUNT == 2
-uint8_t g_led_control_registers[LED_DRIVER_COUNT][18] = {{0}, {0}};
-#elif LED_DRIVER_COUNT == 3
-uint8_t g_led_control_registers[LED_DRIVER_COUNT][18] = {{0}, {0}, {0}};
-#elif LED_DRIVER_COUNT == 4
-uint8_t g_led_control_registers[LED_DRIVER_COUNT][18] = {{0}, {0}, {0}, {0}};
-#endif
-bool g_led_control_registers_update_required = false;
+bool    g_led_control_registers_update_required       = false;
 
 // This is the bit pattern in the LED control registers
 // (for matrix A, add one to register for matrix B)
