@@ -1,6 +1,6 @@
 /* Copyright 2017 Jason Williams
  * Copyright 2018 Jack Humbert
- * Copyright 2018 Yiancar
+ * Copyright 2019 Konstantin Đorđević
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,13 @@
 #    include "wait.h"
 #endif
 
+#include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
+#include "is31fl3737_single.h"
 #include "i2c_master.h"
 #include "progmem.h"
-#include "rgb_matrix.h"
+#include "print.h"
 
 // This is a 7-bit address, that gets left-shifted and bit 0
 // set to 0 for write, 1 for read (as per I2C protocol)
@@ -74,11 +77,11 @@ uint8_t g_twi_transfer_buffer[20];
 // We could optimize this and take out the unused registers from these
 // buffers and the transfers in IS31FL3737_write_pwm_buffer() but it's
 // probably not worth the extra complexity.
-uint8_t g_pwm_buffer[DRIVER_COUNT][192];
+uint8_t g_pwm_buffer[LED_DRIVER_COUNT][192];
 bool    g_pwm_buffer_update_required = false;
 
-uint8_t g_led_control_registers[DRIVER_COUNT][24] = {{0}};
-bool    g_led_control_registers_update_required   = false;
+uint8_t g_led_control_registers[LED_DRIVER_COUNT][24] = {{0}};
+bool    g_led_control_registers_update_required       = false;
 
 void IS31FL3737_write_register(uint8_t addr, uint8_t reg, uint8_t data) {
     g_twi_transfer_buffer[0] = reg;
@@ -156,7 +159,7 @@ void IS31FL3737_init(uint8_t addr) {
     // Disable software shutdown.
     IS31FL3737_write_register(addr, ISSI_REG_CONFIGURATION, 0x01);
 
-// Wait 10ms to ensure the device has woken up.
+    // Wait 10ms to ensure the device has woken up.
 #ifdef __AVR__
     _delay_ms(10);
 #else
@@ -164,47 +167,32 @@ void IS31FL3737_init(uint8_t addr) {
 #endif
 }
 
-void IS31FL3737_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
-    if (index >= 0 && index < DRIVER_LED_TOTAL) {
+void IS31FL3737_set_value(int index, uint8_t value) {
+    if (index >= 0 && index < LED_DRIVER_LED_TOTAL) {
         is31_led led = g_is31_leds[index];
 
-        g_pwm_buffer[led.driver][led.r] = red;
-        g_pwm_buffer[led.driver][led.g] = green;
-        g_pwm_buffer[led.driver][led.b] = blue;
+        // Subtract 0x24 to get the second index of g_pwm_buffer
+        g_pwm_buffer[led.driver][led.v] = value;
         g_pwm_buffer_update_required    = true;
     }
 }
 
-void IS31FL3737_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
-        IS31FL3737_set_color(i, red, green, blue);
+void IS31FL3737_set_value_all(uint8_t value) {
+    for (int i = 0; i < LED_DRIVER_LED_TOTAL; i++) {
+        IS31FL3737_set_value(i, value);
     }
 }
 
-void IS31FL3737_set_led_control_register(uint8_t index, bool red, bool green, bool blue) {
+void IS31FL3737_set_led_control_register(uint8_t index, bool value) {
     is31_led led = g_is31_leds[index];
 
-    uint8_t control_register_r = led.r / 8;
-    uint8_t control_register_g = led.g / 8;
-    uint8_t control_register_b = led.b / 8;
-    uint8_t bit_r              = led.r % 8;
-    uint8_t bit_g              = led.g % 8;
-    uint8_t bit_b              = led.b % 8;
+    uint8_t control_register = led.v / 8;
+    uint8_t bit_value        = led.v % 8;
 
-    if (red) {
-        g_led_control_registers[led.driver][control_register_r] |= (1 << bit_r);
+    if (value) {
+        g_led_control_registers[led.driver][control_register] |= (1 << bit_value);
     } else {
-        g_led_control_registers[led.driver][control_register_r] &= ~(1 << bit_r);
-    }
-    if (green) {
-        g_led_control_registers[led.driver][control_register_g] |= (1 << bit_g);
-    } else {
-        g_led_control_registers[led.driver][control_register_g] &= ~(1 << bit_g);
-    }
-    if (blue) {
-        g_led_control_registers[led.driver][control_register_b] |= (1 << bit_b);
-    } else {
-        g_led_control_registers[led.driver][control_register_b] &= ~(1 << bit_b);
+        g_led_control_registers[led.driver][control_register] &= ~(1 << bit_value);
     }
 
     g_led_control_registers_update_required = true;
