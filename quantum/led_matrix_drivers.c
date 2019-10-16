@@ -28,20 +28,18 @@
  * in their own files.
  */
 
-#if defined(IS31FL3731) || defined(IS31FL3733)
-
-#    if defined(IS31FL3731)
+#if defined(IS31FL3731) || defined(IS31FL3737)
+#    ifdef IS31FL3731
 #        include "is31fl3731_single.h"
+#    else
+#        include "is31fl3737_single.h"
 #    endif
-
 #    include "i2c_master.h"
 
 static void init(void) {
     i2c_init();
 #    ifdef IS31FL3731
-#        ifdef LED_DRIVER_ADDR_1
     IS31FL3731_init(LED_DRIVER_ADDR_1);
-#        endif
 #        ifdef LED_DRIVER_ADDR_2
     IS31FL3731_init(LED_DRIVER_ADDR_2);
 #        endif
@@ -52,17 +50,9 @@ static void init(void) {
     IS31FL3731_init(LED_DRIVER_ADDR_4);
 #        endif
 #    else
-#        ifdef LED_DRIVER_ADDR_1
-    IS31FL3733_init(LED_DRIVER_ADDR_1, 0);
-#        endif
+    IS31FL3737_init(LED_DRIVER_ADDR_1);
 #        ifdef LED_DRIVER_ADDR_2
-    IS31FL3733_init(LED_DRIVER_ADDR_2, 0);
-#        endif
-#        ifdef LED_DRIVER_ADDR_3
-    IS31FL3733_init(LED_DRIVER_ADDR_3, 0);
-#        endif
-#        ifdef LED_DRIVER_ADDR_4
-    IS31FL3733_init(LED_DRIVER_ADDR_4, 0);
+    IS31FL3737_init(LED_DRIVER_ADDR_2);
 #        endif
 #    endif
 
@@ -70,14 +60,12 @@ static void init(void) {
 #    ifdef IS31FL3731
         IS31FL3731_set_led_control_register(index, true);
 #    else
-        IS31FL3733_set_led_control_register(index, true);
+        IS31FL3737_set_led_control_register(index, true);
 #    endif
     }
 // This actually updates the LED drivers
 #    ifdef IS31FL3731
-#        ifdef LED_DRIVER_ADDR_1
     IS31FL3731_update_led_control_registers(LED_DRIVER_ADDR_1, 0);
-#        endif
 #        ifdef LED_DRIVER_ADDR_2
     IS31FL3731_update_led_control_registers(LED_DRIVER_ADDR_2, 1);
 #        endif
@@ -88,26 +76,17 @@ static void init(void) {
     IS31FL3731_update_led_control_registers(LED_DRIVER_ADDR_4, 3);
 #        endif
 #    else
-#        ifdef LED_DRIVER_ADDR_1
-    IS31FL3733_update_led_control_registers(LED_DRIVER_ADDR_1, 0);
-#        endif
 #        ifdef LED_DRIVER_ADDR_2
-    IS31FL3733_update_led_control_registers(LED_DRIVER_ADDR_2, 1);
-#        endif
-#        ifdef LED_DRIVER_ADDR_3
-    IS31FL3733_update_led_control_registers(LED_DRIVER_ADDR_3, 2);
-#        endif
-#        ifdef LED_DRIVER_ADDR_4
-    IS31FL3733_update_led_control_registers(LED_DRIVER_ADDR_4, 3);
+    IS31FL3737_update_led_control_registers(LED_DRIVER_ADDR_1, LED_DRIVER_ADDR_2);
+#        else
+    IS31FL3737_update_led_control_registers(LED_DRIVER_ADDR_1, 0);
 #        endif
 #    endif
 }
 
 static void flush(void) {
 #    ifdef IS31FL3731
-#        ifdef LED_DRIVER_ADDR_1
     IS31FL3731_update_pwm_buffers(LED_DRIVER_ADDR_1, 0);
-#        endif
 #        ifdef LED_DRIVER_ADDR_2
     IS31FL3731_update_pwm_buffers(LED_DRIVER_ADDR_2, 1);
 #        endif
@@ -118,17 +97,10 @@ static void flush(void) {
     IS31FL3731_update_pwm_buffers(LED_DRIVER_ADDR_4, 3);
 #        endif
 #    else
-#        ifdef LED_DRIVER_ADDR_1
-    IS31FL3733_update_pwm_buffers(LED_DRIVER_ADDR_1, 0);
-#        endif
 #        ifdef LED_DRIVER_ADDR_2
-    IS31FL3733_update_pwm_buffers(LED_DRIVER_ADDR_2, 1);
-#        endif
-#        ifdef LED_DRIVER_ADDR_3
-    IS31FL3733_update_pwm_buffers(LED_DRIVER_ADDR_3, 2);
-#        endif
-#        ifdef LED_DRIVER_ADDR_4
-    IS31FL3733_update_pwm_buffers(LED_DRIVER_ADDR_4, 3);
+    IS31FL3737_update_pwm_buffers(LED_DRIVER_ADDR_1, LED_DRIVER_ADDR_2);
+#        else
+    IS31FL3737_update_pwm_buffers(LED_DRIVER_ADDR_1, 0);
 #        endif
 #    endif
 }
@@ -140,9 +112,8 @@ const led_matrix_driver_t led_matrix_driver = {
     .set_value     = IS31FL3731_set_value,
     .set_value_all = IS31FL3731_set_value_all,
 #    else
-    .set_value = IS31FL3733_set_value,
-    .set_value_all = IS31FL3733_set_value_all,
+    .set_value     = IS31FL3737_set_value,
+    .set_value_all = IS31FL3737_set_value_all,
 #    endif
 };
-
 #endif
