@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#pragma once
 
-#ifndef IS31FL3731_DRIVER_H
-#define IS31FL3731_DRIVER_H
-
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef struct is31_led {
     uint8_t driver : 2;
@@ -207,5 +205,3 @@ void IS31FL3731_update_led_control_registers(uint8_t addr, uint8_t index);
 #define C9_14 0xB1
 #define C9_15 0xB2
 #define C9_16 0xB3
-
-#endif  // IS31FL3731_DRIVER_H
