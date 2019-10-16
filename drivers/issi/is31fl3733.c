@@ -15,6 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "is31fl3733.h"
+#include "i2c_master.h"
 
 #ifdef __AVR__
 #    include <avr/interrupt.h>
@@ -23,11 +25,6 @@
 #else
 #    include "wait.h"
 #endif
-
-#include "is31fl3733.h"
-#include <string.h>
-#include "i2c_master.h"
-#include "progmem.h"
 
 // This is a 7-bit address, that gets left-shifted and bit 0
 // set to 0 for write, 1 for read (as per I2C protocol)
