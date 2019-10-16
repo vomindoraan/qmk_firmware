@@ -18,6 +18,10 @@
  */
 #pragma once
 
+#include <quantum.h>
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifndef BACKLIGHT_ENABLE
 #    error You must define BACKLIGHT_ENABLE with LED_MATRIX_ENABLE
 #endif

@@ -14,10 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <stdint.h>
-#include <stdbool.h>
-#include "quantum.h"
 #include "led_matrix.h"
 
 /* Each driver needs to define a struct:
