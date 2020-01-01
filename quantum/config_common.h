@@ -288,7 +288,11 @@
 /* USART configuration */
 #ifdef BLUETOOTH_ENABLE
 #    ifdef __AVR_ATmega32U4__
-#        define SERIAL_UART_BAUD 9600
+#        ifdef MODULE_BT121
+#            define SERIAL_UART_BAUD 250000
+#        else
+#            define SERIAL_UART_BAUD 9600
+#        endif
 #        define SERIAL_UART_DATA UDR1
 #        define SERIAL_UART_UBRR (F_CPU / (16UL * SERIAL_UART_BAUD) - 1)
 #        define SERIAL_UART_RXD_VECT USART1_RX_vect
@@ -306,7 +310,11 @@
                 sei();                              \
             } while (0)
 #    elif (defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__))
-#        define SERIAL_UART_BAUD 115200
+#        ifdef MODULE_BT121
+#            define SERIAL_UART_BAUD 250000
+#        else
+#            define SERIAL_UART_BAUD 115200
+#        endif
 #        define SERIAL_UART_DATA UDR1
 /* UBRR should result in ~16 and set UCSR1A = _BV(U2X1) as per rn42 documentation. HC05 needs baudrate configured accordingly */
 #        define SERIAL_UART_UBRR (F_CPU / (8UL * SERIAL_UART_BAUD) - 1)

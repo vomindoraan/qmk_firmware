@@ -38,6 +38,11 @@ ifeq ($(strip $(BLUETOOTH)), AdafruitEZKey)
 	$(TMK_DIR)/protocol/serial_uart.c
 endif
 
+ifeq ($(strip $(BLUETOOTH)), BT121)
+	LUFA_SRC += $(LUFA_DIR)/bluetooth.c \
+	$(TMK_DIR)/protocol/serial_uart.c
+endif
+
 ifeq ($(strip $(BLUETOOTH)), RN42)
 	LUFA_SRC += $(LUFA_DIR)/bluetooth.c \
 	$(TMK_DIR)/protocol/serial_uart.c
