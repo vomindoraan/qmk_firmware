@@ -1,22 +1,16 @@
 #pragma once
 
-#define DO_PRAGMA(x) _Pragma (#x)
+#define DO_PRAGMA(x)    _Pragma (#x)
+#define DO_WARNING(msg) DO_PRAGMA(GCC warning #msg)
 
 #define DEPRECATED(name, value) \
-    DO_PRAGMA(GCC warning "The below identifier is deprecated and will be removed in future versions of QMK.") \
-    DO_PRAGMA(GCC warning #name) \
+    DO_WARNING(‘name’ is deprecated and will be removed in future versions of QMK) \
     value
 
 #define RENAMED(name, new_name) \
-    DO_PRAGMA(GCC warning "The below identifier is deprecated and will be removed in future versions of QMK.") \
-    DO_PRAGMA(GCC warning #name) \
-    DO_PRAGMA(GCC warning "Please use the new name:") \
-    DO_PRAGMA(GCC warning #new_name) \
+    DO_WARNING(‘name’ is deprecated: please use ‘new_name’ instead) \
     new_name
 
 #define REPLACED(name, replacement, value) \
-    DO_PRAGMA(GCC warning "The below identifier is deprecated and will be removed in future versions of QMK.") \
-    DO_PRAGMA(GCC warning #name) \
-    DO_PRAGMA(GCC warning "Please use the following replacement:") \
-    DO_PRAGMA(GCC warning #replacement) \
+    DO_WARNING(‘name’ is deprecated: please use ‘replacement’ instead) \
     value
