@@ -412,5 +412,5 @@
 #define SS_RCMD(string) SS_RGUI(string)
 #define SS_RWIN(string) SS_RGUI(string)
 
-// DEPRECATED
-#define SS_LCTRL(string) SS_LCTL(string)
+// Deprecated aliases
+#define SS_LCTRL RENAMED_M(SS_LCTRL, SS_LCTL)

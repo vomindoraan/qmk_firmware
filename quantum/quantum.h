@@ -289,8 +289,8 @@ void     send_byte(uint8_t number);
 void     send_nibble(uint8_t number);
 uint16_t hex_to_keycode(uint8_t hex);
 
-void led_set_user(uint8_t usb_led);
-void led_set_kb(uint8_t usb_led);
+REPLACED(led_update_user) void led_set_user(uint8_t usb_led);
+REPLACED(led_update_kb)   void led_set_kb(uint8_t usb_led);
 bool led_update_user(led_t led_state);
 bool led_update_kb(led_t led_state);
 

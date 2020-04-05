@@ -3,6 +3,7 @@
 #include "wait.h"
 #include "print.h"
 #include "debug.h"
+#include "deprecate.h"
 
 #ifndef MATRIX_IO_DELAY
 #    define MATRIX_IO_DELAY 30
@@ -44,8 +45,7 @@ inline matrix_row_t matrix_get_row(uint8_t row) {
 #endif
 }
 
-// Deprecated.
-bool matrix_is_modified(void) {
+DEPRECATED bool matrix_is_modified(void) {
     if (debounce_active()) return false;
     return true;
 }
