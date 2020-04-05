@@ -789,8 +789,8 @@ enum quantum_keycodes {
 #define UC_M_WC UNICODE_MODE_WINC
 
 // Deprecated aliases
-#define UNICODE_MODE_OSX RENAMED(UNICODE_MODE_OSX, UNICODE_MODE_MAC)
-#define UC_M_OS          RENAMED(UC_M_OS, UC_M_MA)
+#define UNICODE_MODE_OSX RENAMED_M(UNICODE_MODE_OSX, UNICODE_MODE_MAC)
+#define UC_M_OS          RENAMED_M(UC_M_OS, UC_M_MA)
 
 #ifdef SWAP_HANDS_ENABLE
 #    define SH_T(kc) (QK_SWAP_HANDS | (kc))

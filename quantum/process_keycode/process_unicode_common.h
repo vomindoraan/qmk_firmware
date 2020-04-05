@@ -51,9 +51,9 @@
 
 // Deprecated aliases
 #if !defined(UNICODE_SONG_MAC) && defined(UNICODE_SONG_OSX)
-#    define UNICODE_SONG_MAC REPLACED(UNICODE_SONG_OSX, UNICODE_SONG_MAC, UNICODE_SONG_OSX)
+#    define UNICODE_SONG_MAC REPLACED_M(UNICODE_SONG_OSX, UNICODE_SONG_MAC, UNICODE_SONG_OSX)
 #endif
-#define UC_OSX RENAMED(UC_OSX, UC_MAC)
+#define UC_OSX RENAMED_M(UC_OSX, UC_MAC)
 
 enum unicode_input_modes {
     UC_MAC,    // macOS using Unicode Hex Input
