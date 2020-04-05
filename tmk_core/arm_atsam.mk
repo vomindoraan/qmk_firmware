@@ -25,7 +25,7 @@ COMPILEFLAGS += -mfloat-abi=hard
 COMPILEFLAGS += -mfpu=fpv4-sp-d16
 COMPILEFLAGS += -mthumb
 
-#ALLOW_WARNINGS = yes
+#WARNINGS_ERROR = yes
 
 CFLAGS += $(COMPILEFLAGS)
 

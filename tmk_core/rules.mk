@@ -92,7 +92,7 @@ endif
 endif
 CFLAGS += -Wall
 CFLAGS += -Wstrict-prototypes
-ifneq ($(strip $(ALLOW_WARNINGS)), yes)
+ifeq ($(strip $(WARNINGS_ERROR)), yes)
     CFLAGS += -Werror
 endif
 #CFLAGS += -mshort-calls
@@ -119,7 +119,7 @@ CXXFLAGS += -O$(OPT)
 CXXFLAGS += -w
 CXXFLAGS += -Wall
 CXXFLAGS += -Wundef
-ifneq ($(strip $(ALLOW_WARNINGS)), yes)
+ifeq ($(strip $(WARNINGS_ERROR)), yes)
     CXXFLAGS += -Werror
 endif
 #CXXFLAGS += -mshort-calls
