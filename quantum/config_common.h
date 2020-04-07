@@ -311,6 +311,7 @@
             } while (0)
 #    elif (defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__))
 #        ifdef MODULE_BT121
+/* 250k baud is required for 0% error at F_CPU = 8MHz and 16MHz (see tables 19-11 and 19-12 in the datasheet) */
 #            define SERIAL_UART_BAUD 250000
 #        else
 #            define SERIAL_UART_BAUD 115200
