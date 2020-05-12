@@ -303,7 +303,7 @@ ifneq ("$(wildcard $(KEYMAP_PATH)/config.h)","")
 endif
 
 # Userspace post config.h pass
-ifneq ("$(wildcard $(USER_PATH)/config.h)","")
+ifneq ("$(wildcard $(USER_PATH)/post_config.h)","")
     POST_CONFIG_H += $(USER_PATH)/post_config.h
 endif
 
