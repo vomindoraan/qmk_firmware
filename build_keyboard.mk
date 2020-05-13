@@ -286,15 +286,16 @@ ifneq ("$(wildcard $(KEYBOARD_PATH_5)/post_config.h)","")
     POST_CONFIG_H += $(KEYBOARD_PATH_5)/post_config.h
 endif
 
+# Disable features that a keyboard doesn't support
+# Process after keyboard, userspace and keymap, but before post_keymap
+-include disable_features.mk
+
 # Userspace makefile second pass
 -include $(USER_PATH)/post_keymap.mk
 # Userspace config.h first pass
 ifneq ("$(wildcard $(USER_PATH)/config.h)","")
     CONFIG_H += $(USER_PATH)/config.h
 endif
-
-# Disable features that a keyboard doesn't support
--include disable_features.mk
 
 # Object files directory
 #     To put object files in current directory, use a dot (.), do NOT make

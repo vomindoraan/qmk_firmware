@@ -9,7 +9,7 @@ TAP_DANCE_ENABLE   = yes
 UNICODEMAP_ENABLE  = yes
 
 # Keyboard-specific feature defaults
-BACKLIGHT_ENABLE   = no
+BACKLIGHT_ENABLE   = yes  # Enabled in userspace, but keyboard has BACKLIGHT_SUPPORTED = no
 RGBLIGHT_ENABLE    = no
 RGB_MATRIX_ENABLE  = no
 
