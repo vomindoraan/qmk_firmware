@@ -359,6 +359,7 @@ endif
 -include disable_features.mk
 
 # Pull in post_rules.mk files from all our subfolders
+-include $(KEYMAP_PATH)/post_rules.mk
 ifneq ("$(wildcard $(KEYBOARD_PATH_1)/post_rules.mk)","")
     include $(KEYBOARD_PATH_1)/post_rules.mk
 endif
@@ -374,6 +375,7 @@ endif
 ifneq ("$(wildcard $(KEYBOARD_PATH_5)/post_rules.mk)","")
     include $(KEYBOARD_PATH_5)/post_rules.mk
 endif
+-include $(USER_PATH)/post_rules.mk
 
 ifneq ("$(wildcard $(KEYMAP_PATH)/config.h)","")
     CONFIG_H += $(KEYMAP_PATH)/config.h
