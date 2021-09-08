@@ -1,11 +1,3 @@
-SRC += kageurufu.c \
-       process_records.c \
-       custom_rgb.c
-
-# Link time optimization, should save on firmware size
-EXTRAFLAGS += -flto
-
-
 # Some usual defaults
 MOUSEKEY_ENABLE = no
 EXTRAKEY_ENABLE = yes

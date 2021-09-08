@@ -1,14 +1,8 @@
-SRC += romus.c
-EXTRAFLAGS += -flto			# Used to make code smaller
-
 # ENABLE
 UNICODE_ENABLE = yes	# Used for unicode character emulation
 EXTRAKEY_ENABLE = yes 	# OS signals like volume control
 
 # DISABLE
-ifndef BLUETOOTH_ENABLE
-	BLUETOOTH_ENABLE = no 	# No bluetooth
-endif
 COMMAND_ENABLE = no			# Some bootmagic thing i dont use
 BOOTMAGIC_ENABLE = no       # Enable Bootmagic Lite
 CONSOLE_ENABLE = no			# Allows console output with a command

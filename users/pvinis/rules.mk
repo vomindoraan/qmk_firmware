@@ -1,9 +1,3 @@
-SRC += pvinis.c # add userspace file
-
-
-## Use the stuff below on the keyboard keymaps, not here.
-## If they are used here, they will replace the keymap's rules, since this file is eval'd later.
-
 # TAP_DANCE_ENABLE = yes
 # AUDIO_ENABLE     = yes # piezo speaker sounds
 # RGBLIGHT_ENABLE  = yes # rgb leds underlight

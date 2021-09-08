@@ -1,4 +1,3 @@
-SRC               += mnil.c
 MOUSEKEY_ENABLE    = yes # Enable mouse keys
 LTO_ENABLE         = yes # Enable link time optimization
 BACKLIGHT_ENABLE   = no

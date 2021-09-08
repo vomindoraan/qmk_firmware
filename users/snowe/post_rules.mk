@@ -1,5 +1,3 @@
-
-
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += oled_setup.c
 
