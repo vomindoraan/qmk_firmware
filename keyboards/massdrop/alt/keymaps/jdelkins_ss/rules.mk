@@ -8,5 +8,3 @@ else
 		PROGRAM_CMD = sudo bin/mdloader_linux --first --download $(TARGET).hex --restart
 	endif
 endif
-
-USER_NAME := jdelkins

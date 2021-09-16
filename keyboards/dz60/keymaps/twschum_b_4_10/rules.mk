@@ -10,6 +10,3 @@ NKRO_ENABLE = yes           # USB Nkey Rollover
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 RGBLIGHT_ENABLE = yes       # Enable keyboard RGB underglow
 KEY_LOCK_ENABLE = yes       # Enables use of KC_LOCK
-
-# Enables including users/twschum/twschum.h
-USER_NAME := twschum

@@ -1,4 +1,3 @@
-USER_NAME := mverteuil
 SRC += muse.c
 
 AUDIO_ENABLE = yes
