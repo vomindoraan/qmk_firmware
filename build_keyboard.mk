@@ -84,8 +84,7 @@ ifneq ("$(wildcard $(KEYBOARD_PATH_1)/)","")
     KEYBOARD_PATHS += $(KEYBOARD_PATH_1)
 endif
 
-
-# Pull in rules.mk files from all our subfolders
+# Pull in rules.mk files from all keyboard subfolders
 ifneq ("$(wildcard $(KEYBOARD_PATH_5)/rules.mk)","")
     include $(KEYBOARD_PATH_5)/rules.mk
 endif
@@ -102,49 +101,35 @@ ifneq ("$(wildcard $(KEYBOARD_PATH_1)/rules.mk)","")
     include $(KEYBOARD_PATH_1)/rules.mk
 endif
 
-# Userspace setup and definitions
-ifeq ("$(USER_NAME)","")
-    USER_NAME := $(KEYMAP)
-endif
-USER_PATH := users/$(USER_NAME)
-
-# Pull in user level rules.mk
--include $(USER_PATH)/rules.mk
-
 MAIN_KEYMAP_PATH_1 := $(KEYBOARD_PATH_1)/keymaps/$(KEYMAP)
 MAIN_KEYMAP_PATH_2 := $(KEYBOARD_PATH_2)/keymaps/$(KEYMAP)
 MAIN_KEYMAP_PATH_3 := $(KEYBOARD_PATH_3)/keymaps/$(KEYMAP)
 MAIN_KEYMAP_PATH_4 := $(KEYBOARD_PATH_4)/keymaps/$(KEYMAP)
 MAIN_KEYMAP_PATH_5 := $(KEYBOARD_PATH_5)/keymaps/$(KEYMAP)
 
-# Pull in rules from info.json
+# Pull in rules.mk from info.json
 INFO_RULES_MK = $(shell $(QMK_BIN) generate-rules-mk --quiet --escape --keyboard $(KEYBOARD) --output $(KEYBOARD_OUTPUT)/src/info_rules.mk)
 include $(INFO_RULES_MK)
 
 # Check for keymap.json first, so we can regenerate keymap.c
 include build_json.mk
 
-# Pull in keymap level rules.mk
+# Locate keymap path
 ifeq ("$(wildcard $(KEYMAP_PATH))", "")
     # Look through the possible keymap folders until we find a matching keymap.c
     ifneq ("$(wildcard $(MAIN_KEYMAP_PATH_5)/keymap.c)","")
-        -include $(MAIN_KEYMAP_PATH_5)/rules.mk
         KEYMAP_C := $(MAIN_KEYMAP_PATH_5)/keymap.c
         KEYMAP_PATH := $(MAIN_KEYMAP_PATH_5)
     else ifneq ("$(wildcard $(MAIN_KEYMAP_PATH_4)/keymap.c)","")
-        -include $(MAIN_KEYMAP_PATH_4)/rules.mk
         KEYMAP_C := $(MAIN_KEYMAP_PATH_4)/keymap.c
         KEYMAP_PATH := $(MAIN_KEYMAP_PATH_4)
     else ifneq ("$(wildcard $(MAIN_KEYMAP_PATH_3)/keymap.c)","")
-        -include $(MAIN_KEYMAP_PATH_3)/rules.mk
         KEYMAP_C := $(MAIN_KEYMAP_PATH_3)/keymap.c
         KEYMAP_PATH := $(MAIN_KEYMAP_PATH_3)
     else ifneq ("$(wildcard $(MAIN_KEYMAP_PATH_2)/keymap.c)","")
-        -include $(MAIN_KEYMAP_PATH_2)/rules.mk
         KEYMAP_C := $(MAIN_KEYMAP_PATH_2)/keymap.c
         KEYMAP_PATH := $(MAIN_KEYMAP_PATH_2)
     else ifneq ("$(wildcard $(MAIN_KEYMAP_PATH_1)/keymap.c)","")
-        -include $(MAIN_KEYMAP_PATH_1)/rules.mk
         KEYMAP_C := $(MAIN_KEYMAP_PATH_1)/keymap.c
         KEYMAP_PATH := $(MAIN_KEYMAP_PATH_1)
     else ifneq ($(LAYOUTS),)
@@ -156,13 +141,24 @@ ifeq ("$(wildcard $(KEYMAP_PATH))", "")
     endif
 endif
 
+# Userspace setup and definitions
+# First check if the name has been overriden at the keymap / community layout level
+-include $(KEYMAP_PATH)/user.mk
+ifeq ("$(USER_NAME)","")
+    USER_NAME := $(KEYMAP)
+endif
+USER_PATH := users/$(USER_NAME)
+
+# Pull in userspace-level rules.mk
+-include $(USER_PATH)/rules.mk
+
+# Pull in keymap-level rules.mk
+-include $(KEYMAP_PATH)/rules.mk
+
 # Have we found a keymap.json?
 ifneq ("$(wildcard $(KEYMAP_JSON))", "")
     KEYMAP_C := $(KEYMAP_OUTPUT)/src/keymap.c
     KEYMAP_H := $(KEYMAP_OUTPUT)/src/config.h
-
-    # Load the keymap-level rules.mk if exists
-    -include $(KEYMAP_PATH)/rules.mk
 
     # Load any rules.mk content from keymap.json
     INFO_RULES_MK = $(shell $(QMK_BIN) generate-rules-mk --quiet --escape --keyboard $(KEYBOARD) --keymap $(KEYMAP) --output $(KEYMAP_OUTPUT)/src/rules.mk)
@@ -358,7 +354,7 @@ generated-files: $(KEYBOARD_OUTPUT)/src/info_config.h $(KEYBOARD_OUTPUT)/src/def
 # Disable features that a keyboard doesn't support
 -include disable_features.mk
 
-# Pull in post_rules.mk files from all our subfolders
+# Pull in post_rules.mk files from all keyboard subfolders
 ifneq ("$(wildcard $(KEYBOARD_PATH_1)/post_rules.mk)","")
     include $(KEYBOARD_PATH_1)/post_rules.mk
 endif
@@ -375,7 +371,7 @@ ifneq ("$(wildcard $(KEYBOARD_PATH_5)/post_rules.mk)","")
     include $(KEYBOARD_PATH_5)/post_rules.mk
 endif
 
-# Pull in user level post_rules.mk
+# Pull in userspace-level post_rules.mk
 -include $(USER_PATH)/post_rules.mk
 
 ifneq ("$(wildcard $(KEYMAP_PATH)/config.h)","")
