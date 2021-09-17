@@ -354,6 +354,9 @@ generated-files: $(KEYBOARD_OUTPUT)/src/info_config.h $(KEYBOARD_OUTPUT)/src/def
 # Disable features that a keyboard doesn't support
 -include disable_features.mk
 
+# Pull in userspace-level post_rules.mk
+-include $(USER_PATH)/post_rules.mk
+
 # Pull in post_rules.mk files from all keyboard subfolders
 ifneq ("$(wildcard $(KEYBOARD_PATH_1)/post_rules.mk)","")
     include $(KEYBOARD_PATH_1)/post_rules.mk
@@ -371,9 +374,7 @@ ifneq ("$(wildcard $(KEYBOARD_PATH_5)/post_rules.mk)","")
     include $(KEYBOARD_PATH_5)/post_rules.mk
 endif
 
-# Pull in userspace-level post_rules.mk
--include $(USER_PATH)/post_rules.mk
-
+# Pull in keymap-level config.h
 ifneq ("$(wildcard $(KEYMAP_PATH)/config.h)","")
     CONFIG_H += $(KEYMAP_PATH)/config.h
 endif
