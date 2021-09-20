@@ -1,5 +1,5 @@
 # Generic features
-BOOTMAGIC_ENABLE   = no
+BOOTMAGIC_ENABLE   = yes
 COMMAND_ENABLE     = yes
 CONSOLE_ENABLE     = yes
 EXTRAKEY_ENABLE    = yes
@@ -12,6 +12,7 @@ UNICODEMAP_ENABLE  = yes
 BACKLIGHT_ENABLE   = no
 RGBLIGHT_ENABLE    = no
 RGB_MATRIX_ENABLE  = no
+VIA_ENABLE         = no
 
 # Firmware size reduction
 GRAVE_ESC_ENABLE   = no
