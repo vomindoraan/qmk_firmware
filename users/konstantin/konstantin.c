@@ -102,16 +102,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case KC_ESC:
         if (record->event.pressed) {
-#ifdef LAYER_NUMPAD  // Disable Numpad layer before Fn layer
-            if (IS_LAYER_ON(L_NUMPAD)) {
-                layer_off(L_NUMPAD);
-                return false;
-            }
-#endif
-#ifdef LAYER_FN
+#ifdef LAYER_FN  // Disable Fn layer before Numpad layer
             if (IS_LAYER_ON(L_FN) && fn_lock) {
                 layer_off(L_FN);
                 return fn_lock = false;
+            }
+#endif
+#ifdef LAYER_NUMPAD
+            if (IS_LAYER_ON(L_NUMPAD)) {
+                layer_off(L_NUMPAD);
+                return false;
             }
 #endif
         }

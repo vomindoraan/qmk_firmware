@@ -27,16 +27,16 @@
     #include "unicode.h"
 #endif
 
+#ifdef LAYER_NUMPAD
+    #define NUMPAD TG(L_NUMPAD)
+#endif
+
 #ifdef LAYER_FN
     #define FN      MO(L_FN)
     #define FNLK    TG(L_FN)
     #define FN_CAPS LT(L_FN, KC_CAPS)
     #define FN_ESC  LT(L_FN, KC_ESC)
     #define FN_FNLK TT(L_FN)
-#endif
-
-#ifdef LAYER_NUMPAD
-    #define NUMPAD TG(L_NUMPAD)
 #endif
 
 #define BREAK LCTL(KC_PAUS)
@@ -74,11 +74,11 @@
 
 enum layers_user {
     L_BASE,
-#ifdef LAYER_FN
-    L_FN,
-#endif
 #ifdef LAYER_NUMPAD
     L_NUMPAD,
+#endif
+#ifdef LAYER_FN
+    L_FN,
 #endif
 
     LAYERS_KEYMAP,
