@@ -1,12 +1,12 @@
 # Generic features
 BOOTMAGIC_ENABLE   = yes
 COMMAND_ENABLE     = yes
-CONSOLE_ENABLE     = yes
+CONSOLE_ENABLE     = no
 EXTRAKEY_ENABLE    = yes
 MOUSEKEY_ENABLE    = yes
 NKRO_ENABLE        = yes
 TAP_DANCE_ENABLE   = yes
-UNICODEMAP_ENABLE  = no
+UNICODEMAP_ENABLE  = yes
 
 # Keyboard-specific features
 BACKLIGHT_ENABLE   = no
