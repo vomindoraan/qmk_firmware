@@ -19,6 +19,11 @@ static inline void fn_light(void) {
     rgblight_sethsv_noeeprom(modern_dolch_red.h, modern_dolch_red.s, rgblight_get_val());
 }
 
+static inline void numpad_light(void) {
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+    rgblight_sethsv_noeeprom(serika_yellow.h, serika_yellow.s, rgblight_get_val());
+}
+
 static inline void caps_light(void) {
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
     rgblight_sethsv_noeeprom(modern_dolch_cyan.h, modern_dolch_cyan.s, rgblight_get_val());
@@ -35,6 +40,8 @@ static bool last_checked_layer;
 static void check_light_layer(layer_state_t state) {
     if (IS_LAYER_ON_STATE(state, L_FN)) {
         fn_light();
+    } else if (IS_LAYER_ON_STATE(state, L_NUMPAD)) {
+        numpad_light();
     } else if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
         caps_light();
     } else {
@@ -48,6 +55,8 @@ static void check_light_led(uint8_t leds) {
         caps_light();
     } else if (IS_LAYER_ON(L_FN)) {
         fn_light();
+    } else if (IS_LAYER_ON(L_NUMPAD)) {
+        numpad_light();
     } else {
         restore_light();
     }

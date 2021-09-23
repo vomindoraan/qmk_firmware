@@ -40,3 +40,4 @@ const HSV godspeed_blue     = { GODSPEED_BLUE };
 const HSV godspeed_yellow   = { GODSPEED_YELLOW };
 const HSV modern_dolch_cyan = { MODERN_DOLCH_CYAN };
 const HSV modern_dolch_red  = { MODERN_DOLCH_RED };
+const HSV serika_yellow     = { SERIKA_YELLOW };
