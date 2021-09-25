@@ -35,38 +35,54 @@ static void restore_light(void) {
     rgblight_sethsv_noeeprom(saved.hue, saved.sat, saved.val);
 }
 
-static bool last_checked_layer;
+typedef enum {
+    LH_CAPS = 1,
+    LH_NUMPAD,
+    LH_FN,
 
-static void check_light_layer(layer_state_t state) {
-    if (IS_LAYER_ON_STATE(state, L_FN)) {
-        fn_light();
-    } else if (IS_LAYER_ON_STATE(state, L_NUMPAD)) {
-        numpad_light();
-    } else if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
-        caps_light();
-    } else {
-        restore_light();
+    LH__COUNT = LH_FN
+} light_handler;
+
+static light_handler light_handlers[LH__COUNT] = {0};
+
+static void push_light_handler(light_handler lh) {
+    light_handler prev = light_handlers[0];
+    for (int i = 1; i < LH__COUNT; i++) {
+        if (prev == lh) break;
+        light_handler tmp = light_handlers[i];
+        light_handlers[i] = prev;
+        prev = tmp;
     }
-    last_checked_layer = true;
+    light_handlers[0] = lh;
 }
 
-static void check_light_led(uint8_t leds) {
-    if (IS_LED_ON(leds, USB_LED_CAPS_LOCK)) {
-        caps_light();
-    } else if (IS_LAYER_ON(L_FN)) {
-        fn_light();
-    } else if (IS_LAYER_ON(L_NUMPAD)) {
-        numpad_light();
-    } else {
-        restore_light();
-    }
-    last_checked_layer = false;
-}
+static void check_light(layer_state_t *pstate, uint8_t *pleds) {
+    layer_state_t state = pstate ? *pstate : layer_state;
+    uint8_t       leds  = pleds  ? *pleds  : host_keyboard_leds();
 
-static void inline check_light(void) {
-    last_checked_layer
-        ? check_light_layer(layer_state)
-        : check_light_led(host_keyboard_leds());
+    for (int i = 0; i < LH__COUNT && light_handlers[i]; i++) {
+        switch (light_handlers[i]) {
+        case LH_CAPS:
+            if (IS_LED_ON(leds, USB_LED_CAPS_LOCK)) {
+                caps_light();
+                return;
+            }
+            break;
+        case LH_NUMPAD:
+            if (IS_LAYER_ON_STATE(state, L_NUMPAD)) {
+                numpad_light();
+                return;
+            }
+            break;
+        case LH_FN:
+            if (IS_LAYER_ON_STATE(state, L_FN)) {
+                fn_light();
+                return;
+            }
+            break;
+        }
+    }
+    restore_light();
 }
 
 void eeconfig_init_keymap(void) {
@@ -75,22 +91,26 @@ void eeconfig_init_keymap(void) {
 
 layer_state_t layer_state_set_keymap(layer_state_t state) {
     static layer_state_t prev_state = L_BASE;
-    bool fn_changed     = IS_LAYER_ON_STATE(state,      L_FN)
-                       != IS_LAYER_ON_STATE(prev_state, L_FN);
-    bool numpad_changed = IS_LAYER_ON_STATE(state,      L_NUMPAD)
-                       != IS_LAYER_ON_STATE(prev_state, L_NUMPAD);
+
+    bool fn_changed =
+        IS_LAYER_ON_STATE(state, L_FN)     != IS_LAYER_ON_STATE(prev_state, L_FN);
+    bool numpad_changed =
+        IS_LAYER_ON_STATE(state, L_NUMPAD) != IS_LAYER_ON_STATE(prev_state, L_NUMPAD);
+
     if (fn_changed || numpad_changed) {
-        check_light_layer(state);
+        push_light_handler(LH_NUMPAD);
+        push_light_handler(LH_FN);
+        check_light(&state, NULL);
     }
     return prev_state = state;
 }
 
 void led_set_keymap(uint8_t usb_led) {
     static uint8_t prev_usb_led = 0;
-    bool caps_changed = IS_LED_ON(usb_led,      USB_LED_CAPS_LOCK)
-                     != IS_LED_ON(prev_usb_led, USB_LED_CAPS_LOCK);
-    if (caps_changed) {
-        check_light_led(usb_led);
+
+    if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK) != IS_LED_ON(prev_usb_led, USB_LED_CAPS_LOCK)) {
+        push_light_handler(LH_CAPS);
+        check_light(NULL, &usb_led);
     }
     prev_usb_led = usb_led;
 }
@@ -106,7 +126,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             }
             restore_light();
         } else {
-            check_light();
+            check_light(NULL, NULL);
         }
         break;
 
