@@ -56,14 +56,14 @@ static void push_light_handler(light_handler lh) {
     light_handlers[0] = lh;
 }
 
-static void check_light(layer_state_t *pstate, uint8_t *pleds) {
+static void check_light(layer_state_t *pstate, led_t *pleds) {
     layer_state_t state = pstate ? *pstate : layer_state;
-    uint8_t       leds  = pleds  ? *pleds  : host_keyboard_leds();
+    led_t         leds  = pleds  ? *pleds  : host_keyboard_led_state();
 
     for (int i = 0; i < LH__COUNT && light_handlers[i]; i++) {
         switch (light_handlers[i]) {
         case LH_CAPS:
-            if (IS_LED_ON(leds, USB_LED_CAPS_LOCK)) {
+            if (leds.caps_lock) {
                 caps_light();
                 return;
             }
@@ -105,14 +105,15 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
     return prev_state = state;
 }
 
-void led_set_keymap(uint8_t usb_led) {
-    static uint8_t prev_usb_led = 0;
+bool led_update_keymap(led_t leds) {
+    static led_t prev_leds = { .raw = 0 };
 
-    if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK) != IS_LED_ON(prev_usb_led, USB_LED_CAPS_LOCK)) {
+    if (leds.caps_lock != prev_leds.caps_lock) {
         push_light_handler(LH_CAPS);
-        check_light(NULL, &usb_led);
+        check_light(NULL, &leds);
     }
-    prev_usb_led = usb_led;
+    prev_leds = leds;
+    return true;
 }
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
