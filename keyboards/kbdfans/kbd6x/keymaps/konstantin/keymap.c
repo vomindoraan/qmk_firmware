@@ -75,15 +75,21 @@ void eeconfig_init_keymap(void) {
 
 layer_state_t layer_state_set_keymap(layer_state_t state) {
     static layer_state_t prev_state = L_BASE;
-    if (IS_LAYER_ON_STATE(state, L_FN) != IS_LAYER_ON_STATE(prev_state, L_FN)) {
-        check_light_layer(state);  // Fn state changed since last time
+    bool fn_changed     = IS_LAYER_ON_STATE(state,      L_FN)
+                       != IS_LAYER_ON_STATE(prev_state, L_FN);
+    bool numpad_changed = IS_LAYER_ON_STATE(state,      L_NUMPAD)
+                       != IS_LAYER_ON_STATE(prev_state, L_NUMPAD);
+    if (fn_changed || numpad_changed) {
+        check_light_layer(state);
     }
     return prev_state = state;
 }
 
 void led_set_keymap(uint8_t usb_led) {
     static uint8_t prev_usb_led = 0;
-    if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK) != IS_LED_ON(prev_usb_led, USB_LED_CAPS_LOCK)) {
+    bool caps_changed = IS_LED_ON(usb_led,      USB_LED_CAPS_LOCK)
+                     != IS_LED_ON(prev_usb_led, USB_LED_CAPS_LOCK);
+    if (caps_changed) {
         check_light_led(usb_led);
     }
     prev_usb_led = usb_led;
