@@ -73,24 +73,20 @@ void eeconfig_init_keymap(void) {
     reset_light();
 }
 
-static bool skip_led = false;
-
 layer_state_t layer_state_set_keymap(layer_state_t state) {
     static layer_state_t prev_state = L_BASE;
     if (IS_LAYER_ON_STATE(state, L_FN) != IS_LAYER_ON_STATE(prev_state, L_FN)) {
         check_light_layer(state);  // Fn state changed since last time
-        skip_led = IS_LAYER_ON_STATE(state, L_FN);
-        // led_set_keymap will be called automatically after this
     }
     return prev_state = state;
 }
 
 void led_set_keymap(uint8_t usb_led) {
-    if (skip_led) {
-        skip_led = false;
-        return;  // Skip calls triggered by the Fn layer turning on
+    static uint8_t prev_usb_led = 0;
+    if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK) != IS_LED_ON(prev_usb_led, USB_LED_CAPS_LOCK)) {
+        check_light_led(usb_led);
     }
-    check_light_led(usb_led);
+    prev_usb_led = usb_led;
 }
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
