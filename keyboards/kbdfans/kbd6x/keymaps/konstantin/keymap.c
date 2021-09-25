@@ -9,27 +9,27 @@ enum keycodes_keymap {
     RCTRL = RANGE_KEYMAP,
 };
 
-static inline void reset_light(void) {
+static void reset_light(void) {
     rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
     rgblight_sethsv(MODERN_DOLCH_RED);
 }
 
-static inline void fn_light(void) {
+static void fn_light(void) {
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
     rgblight_sethsv_noeeprom(modern_dolch_red.h, modern_dolch_red.s, rgblight_get_val());
 }
 
-static inline void numpad_light(void) {
+static void numpad_light(void) {
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
     rgblight_sethsv_noeeprom(serika_yellow.h, serika_yellow.s, rgblight_get_val());
 }
 
-static inline void caps_light(void) {
+static void caps_light(void) {
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
     rgblight_sethsv_noeeprom(modern_dolch_cyan.h, modern_dolch_cyan.s, rgblight_get_val());
 }
 
-static inline void restore_light(void) {
+static void restore_light(void) {
     rgblight_config_t saved = { .raw = eeconfig_read_rgblight() };
     rgblight_mode_noeeprom(saved.mode);
     rgblight_sethsv_noeeprom(saved.hue, saved.sat, saved.val);
