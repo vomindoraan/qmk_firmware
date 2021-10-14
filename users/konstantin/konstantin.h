@@ -72,6 +72,12 @@
         set_mods(mods);            \
     }
 
+#define SWAP(a, b) {        \
+        typeof(a) SWAP = a; \
+        a = b;              \
+        b = SWAP;           \
+    }
+
 enum layers_user {
     L_BASE,
 #ifdef LAYER_NUMPAD

@@ -49,9 +49,7 @@ static void push_light_handler(light_handler lh) {
     light_handler prev = light_handlers[0];
     for (int i = 1; i < LH__COUNT; i++) {
         if (prev == lh) break;
-        light_handler tmp = light_handlers[i];
-        light_handlers[i] = prev;
-        prev = tmp;
+        SWAP(light_handlers[i], prev);
     }
     light_handlers[0] = lh;
 }
