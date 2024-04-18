@@ -1,5 +1,5 @@
 # Generic features
-BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
+BOOTMAGIC_ENABLE   = yes
 COMMAND_ENABLE     = yes
 CONSOLE_ENABLE     = no
 EXTRAKEY_ENABLE    = yes
