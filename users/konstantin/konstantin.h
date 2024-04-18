@@ -18,13 +18,13 @@
 
 #include "quantum.h"
 #if defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
-    #include "rgb.h"
+    #include "features/rgb.h"
 #endif
 #ifdef TAP_DANCE_ENABLE
-    #include "tap_dance.h"
+    #include "features/tap_dance.h"
 #endif
 #if defined(UNICODE_ENABLE) || defined(UNICODEMAP_ENABLE)
-    #include "unicode.h"
+    #include "features/unicode.h"
 #endif
 
 #ifdef LAYER_NUMPAD
