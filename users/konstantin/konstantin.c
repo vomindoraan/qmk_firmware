@@ -108,23 +108,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case CLEAR:
         if (record->event.pressed) {
             CLEAN_MODS(
-                SEND_STRING(SS_LCTL("a") SS_TAP(X_DELETE));
-            )
+                SEND_STRING(SS_LCTL("a") SS_TAP(X_DELETE))
+            );
         }
         break;
 
     case DST_P_R:
         kc = (get_mods() & DST_MOD_MASK) ? DST_REM : DST_PRV;
         CLEAN_MODS(
-            (record->event.pressed ? register_code16 : unregister_code16)(kc);
-        )
+            (record->event.pressed ? register_code16 : unregister_code16)(kc)
+        );
         break;
 
     case DST_N_A:
         kc = (get_mods() & DST_MOD_MASK) ? DST_ADD : DST_NXT;
         CLEAN_MODS(
-            (record->event.pressed ? register_code16 : unregister_code16)(kc);
-        )
+            (record->event.pressed ? register_code16 : unregister_code16)(kc)
+        );
         break;
     }
 

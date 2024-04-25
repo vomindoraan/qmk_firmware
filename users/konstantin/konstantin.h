@@ -65,18 +65,20 @@
 #define RSF_SLS RSFT_T(KC_SLSH)
 
 // Clear mods, perform action, restore mods
-#define CLEAN_MODS(action) {       \
-        uint8_t mods = get_mods(); \
-        clear_mods();              \
-        action;                    \
-        set_mods(mods);            \
-    }
+#define CLEAN_MODS(action)          \
+    do {                            \
+        uint8_t _mods = get_mods(); \
+        clear_mods();               \
+        action;                     \
+        set_mods(_mods);            \
+    } while (0)
 
-#define SWAP(a, b) {        \
-        typeof(a) SWAP = a; \
-        a = b;              \
-        b = SWAP;           \
-    }
+#define SWAP(a, b)            \
+    do {                      \
+        typeof(a) _tmp = (a); \
+        (a) = (b);            \
+        (b) = _tmp;           \
+    } while (0)
 
 enum layers_user {
     L_BASE,
