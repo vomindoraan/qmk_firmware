@@ -14,14 +14,14 @@ static void reset_light(void) {
     rgblight_sethsv(MODERN_DOLCH_RED);
 }
 
-static void fn_light(void) {
-    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-    rgblight_sethsv_noeeprom(modern_dolch_red.h, modern_dolch_red.s, rgblight_get_val());
-}
-
 static void numpad_light(void) {
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
     rgblight_sethsv_noeeprom(serika_yellow.h, serika_yellow.s, rgblight_get_val());
+}
+
+static void fn_light(void) {
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+    rgblight_sethsv_noeeprom(modern_dolch_red.h, modern_dolch_red.s, rgblight_get_val());
 }
 
 static void caps_light(void) {
@@ -36,11 +36,11 @@ static void restore_light(void) {
 }
 
 typedef enum {
-    LH_CAPS = 1,
-    LH_NUMPAD,
+    LH_NUMPAD = 1,
     LH_FN,
+    LH_CAPS,
 
-    LH__COUNT = LH_FN
+    LH__COUNT = LH_CAPS
 } light_handler;
 
 static light_handler light_handlers[LH__COUNT] = {0};
@@ -60,26 +60,29 @@ static void check_light(layer_state_t *pstate, led_t *pleds) {
 
     for (int i = 0; i < LH__COUNT && light_handlers[i]; i++) {
         switch (light_handlers[i]) {
-        case LH_CAPS:
-            if (leds.caps_lock) {
-                caps_light();
-                return;
-            }
-            break;
         case LH_NUMPAD:
             if (IS_LAYER_ON_STATE(state, L_NUMPAD)) {
                 numpad_light();
                 return;
             }
             break;
+
         case LH_FN:
             if (IS_LAYER_ON_STATE(state, L_FN)) {
                 fn_light();
                 return;
             }
             break;
+
+        case LH_CAPS:
+            if (leds.caps_lock) {
+                caps_light();
+                return;
+            }
+            break;
         }
     }
+
     restore_light();
 }
 
@@ -90,12 +93,12 @@ void eeconfig_init_keymap(void) {
 layer_state_t layer_state_set_keymap(layer_state_t state) {
     static layer_state_t prev_state = L_BASE;
 
-    bool fn_changed =
-        IS_LAYER_ON_STATE(state, L_FN)     != IS_LAYER_ON_STATE(prev_state, L_FN);
     bool numpad_changed =
         IS_LAYER_ON_STATE(state, L_NUMPAD) != IS_LAYER_ON_STATE(prev_state, L_NUMPAD);
+    bool fn_changed =
+        IS_LAYER_ON_STATE(state, L_FN)     != IS_LAYER_ON_STATE(prev_state, L_FN);
 
-    if (fn_changed || numpad_changed) {
+    if (numpad_changed || fn_changed) {
         push_light_handler(LH_NUMPAD);
         push_light_handler(LH_FN);
         check_light(&state, NULL);
@@ -217,7 +220,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤
      * │      │Mv←│Mv↓│Mv→│TNx│   │   │   │   │   │   │   │        │
      * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┤
-     * │        │RTg│RV-│RV+│RMd│   │   │   │   │   │   │      │   │
+     * │        │RTg│RV-│RV+│RM+│   │   │   │   │   │   │      │   │
      * └─────┬──┴┬──┴──┬┴───┴───┴───┴───┴───┴───┴──┬┴───┴┬───┬─┴───┘
      *       │DPR│DstNA│                           │RGui │   │
      *       └───┴─────┴───────────────────────────┴─────┴───┘
