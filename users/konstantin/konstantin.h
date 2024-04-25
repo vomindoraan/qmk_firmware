@@ -99,12 +99,12 @@ enum keycodes_user {
 };
 
 void keyboard_pre_init_keymap(void);
-void eeconfig_init_keymap(void);
 void keyboard_post_init_keymap(void);
+
+void eeconfig_init_keymap(void);
 
 layer_state_t layer_state_set_keymap(layer_state_t state);
 
-void led_set_keymap(uint8_t usb_led);
 bool led_update_keymap(led_t led_state);
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
