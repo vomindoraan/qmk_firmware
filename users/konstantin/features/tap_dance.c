@@ -17,9 +17,10 @@
 #include "tap_dance.h"
 #include "konstantin.h"
 
-#define ACTION_TAP_DANCE_DOUBLE_MOD(mod1, mod2) {                       \
+#define ACTION_TAP_DANCE_DOUBLE_MOD(mod1, mod2)                         \
+    {                                                                   \
         .fn        = { td_double_mod_each, NULL, td_double_mod_reset }, \
-        .user_data = &(tap_dance_pair_t){ mod1, mod2 },              \
+        .user_data = &(tap_dance_pair_t){ mod1, mod2 },                 \
     }
 
 void td_double_mod_each(tap_dance_state_t *state, void *user_data) {
@@ -47,9 +48,10 @@ void td_double_mod_reset(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-#define ACTION_TAP_DANCE_MOD_LAYER(mod, layer) {                      \
+#define ACTION_TAP_DANCE_MOD_LAYER(mod, layer)                        \
+    {                                                                 \
         .fn        = { td_mod_layer_each, NULL, td_mod_layer_reset }, \
-        .user_data = &(tap_dance_dual_role_t){ mod, layer },       \
+        .user_data = &(tap_dance_dual_role_t){ mod, layer },          \
     }
 
 void td_mod_layer_each(tap_dance_state_t *state, void *user_data) {
@@ -77,9 +79,10 @@ void td_mod_layer_reset(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-#define ACTION_TAP_DANCE_LAYER_MOD(layer, mod) {                      \
+#define ACTION_TAP_DANCE_LAYER_MOD(layer, mod)                        \
+    {                                                                 \
         .fn        = { td_layer_mod_each, NULL, td_layer_mod_reset }, \
-        .user_data = &(tap_dance_layer_mod_t){ layer, mod, 0, 0 }, \
+        .user_data = &(tap_dance_layer_mod_t){ layer, mod, 0, 0 },    \
     }
 
 typedef struct {
