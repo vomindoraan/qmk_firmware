@@ -41,12 +41,12 @@ typedef enum {
     LH_CAPS,
 
     LH__COUNT = LH_CAPS
-} light_handler;
+} light_handler_t;
 
-static light_handler light_handlers[LH__COUNT] = {0};
+static light_handler_t light_handlers[LH__COUNT] = { 0 };
 
-static void push_light_handler(light_handler lh) {
-    light_handler prev = light_handlers[0];
+static void push_light_handler(light_handler_t lh) {
+    light_handler_t prev = light_handlers[0];
     for (int i = 1; i < LH__COUNT; i++) {
         if (prev == lh) break;
         SWAP(light_handlers[i], prev);
