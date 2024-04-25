@@ -93,14 +93,16 @@ void eeconfig_init_keymap(void) {
 layer_state_t layer_state_set_keymap(layer_state_t state) {
     static layer_state_t prev_state = L_BASE;
 
-    bool numpad_changed =
-        IS_LAYER_ON_STATE(state, L_NUMPAD) != IS_LAYER_ON_STATE(prev_state, L_NUMPAD);
-    bool fn_changed =
-        IS_LAYER_ON_STATE(state, L_FN)     != IS_LAYER_ON_STATE(prev_state, L_FN);
-
-    if (numpad_changed || fn_changed) {
+    bool changed = false;
+    if (IS_LAYER_ON_STATE(state, L_NUMPAD) != IS_LAYER_ON_STATE(prev_state, L_NUMPAD)) {
         push_light_handler(LH_NUMPAD);
+        changed = true;
+    }
+    if (IS_LAYER_ON_STATE(state, L_FN) != IS_LAYER_ON_STATE(prev_state, L_FN)) {
         push_light_handler(LH_FN);
+        changed = true;
+    }
+    if (changed) {
         check_light(&state, NULL);
     }
     return prev_state = state;
