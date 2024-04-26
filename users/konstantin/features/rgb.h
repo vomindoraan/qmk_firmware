@@ -18,14 +18,33 @@
 
 #include "quantum.h"
 
-#define GODSPEED_BLUE     198, 68,  255
-#define GODSPEED_YELLOW   27,  153, 255
+#define GODSPEED_BLUE     198,  68, 255
+#define GODSPEED_YELLOW    27, 153, 255
 #define MODERN_DOLCH_CYAN 110, 255, 108
 #define MODERN_DOLCH_RED  253, 255, 108
-#define SERIKA_YELLOW     18,  255, 128
+#define SERIKA_YELLOW      18, 255, 128
 
-extern const HSV godspeed_blue;
-extern const HSV godspeed_yellow;
-extern const HSV modern_dolch_cyan;
-extern const HSV modern_dolch_red;
-extern const HSV serika_yellow;
+#ifdef RGB_INDICATORS
+
+#define LED_NUM_LOCK    (1 << 0)
+#define LED_CAPS_LOCK   (1 << 1)
+#define LED_SCROLL_LOCK (1 << 2)
+#define LED_COMPOSE     (1 << 3)
+#define LED_KANA        (1 << 4)
+
+typedef struct {
+    uint8_t layer;
+    uint8_t led;
+    uint8_t mode;
+    HSV     color;
+} rgb_indicator_t;
+
+extern const rgb_indicator_t rgb_indicators[];
+
+void rgb_indicator_reset(void);
+void rgb_indicator_action(void);
+void rgb_indicator_update_layer(layer_state_t state);
+void rgb_indicator_update_led(led_t led_state);
+bool rgb_indicator_process_record(uint16_t keycode, keyrecord_t *record);
+
+#endif  // RGB_INDICATORS

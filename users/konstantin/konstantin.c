@@ -32,6 +32,9 @@ void keyboard_post_init_keymap(void) {}
 
 void eeconfig_init_user(void) {
     eeconfig_init_keymap();
+#ifdef RGB_INDICATORS
+    rgb_indicator_reset();
+#endif
 }
 
 __attribute__((weak))
@@ -39,7 +42,9 @@ void eeconfig_init_keymap(void) {}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     state = layer_state_set_keymap(state);
-
+#ifdef RGB_INDICATORS
+    rgb_indicator_update_layer(state);
+#endif
 #ifdef LAYER_NUMPAD
     bool numpad = IS_LAYER_ON_STATE(state, L_NUMPAD);
     bool num_lock = host_keyboard_led_state().num_lock;
@@ -49,7 +54,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         );
     }
 #endif
-
     return state;
 }
 
@@ -59,7 +63,13 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
 }
 
 bool led_update_user(led_t led_state) {
-    return led_update_keymap(led_state);
+    if (!led_update_keymap(led_state)) {
+        return false;
+    }
+#ifdef RGB_INDICATORS
+    rgb_indicator_update_led(led_state);
+#endif
+    return true;
 }
 
 __attribute__((weak))
@@ -71,6 +81,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keymap(keycode, record)) {
         return false;
     }
+#ifdef RGB_INDICATORS
+    if (!rgb_indicator_process_record(keycode, record)) {
+        return false;
+    }
+#endif
 
     switch (keycode) {
         uint16_t kc;
