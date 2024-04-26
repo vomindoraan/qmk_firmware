@@ -1,4 +1,4 @@
-/* Copyright 2019-2021 Konstantin Đorđević <vomindoraan@gmail.com>
+/* Copyright 2019-2024 Konstantin Đorđević <vomindoraan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
